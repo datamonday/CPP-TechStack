@@ -9,7 +9,20 @@ This warehouse contains the notes recorded in the process of learning the knowle
 > Repo: https://github.com/datamonday/CPP-Learning
 
 ---
-<!-- TOC -->autoauto- [C/C++ Tech Stack](#cc-tech-stack)auto    - [01 C Language](#01-c-language)auto    - [02 CPP Language](#02-cpp-language)auto    - [03 Data Structure](#03-data-structure)auto    - [04 Principles of Computer Organization](#04-principles-of-computer-organization)auto    - [05 Operating System](#05-operating-system)auto    - [06 Computer Network](#06-computer-network)auto    - [07 Compilation Principle](#07-compilation-principle)auto    - [08 Discrete Mathematics](#08-discrete-mathematics)autoauto<!-- /TOC -->
+<!-- TOC -->
+
+[C/C++ Tech Stack](#cc-tech-stack)
+
+- [01 C Language](#01-c-language)
+- [02 CPP Language](#02-cpp-language)
+- [03 Data Structure](#03-data-structure)
+- [04 Principles of Computer Organization](#04-principles-of-computer-organization)
+- [05 Operating System](#05-operating-system)
+- [06 Computer Network](#06-computer-network)
+- [07 Compilation Principle](#07-compilation-principle)
+- [08 Discrete Mathematics](#08-discrete-mathematics)
+
+<!-- /TOC -->
 
 ---
 ## 01 C Language
