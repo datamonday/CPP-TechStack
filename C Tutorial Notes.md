@@ -1,5 +1,11 @@
-# 课程大纲
 
+---
+> Contributor: datamonday
+>
+> Repo: https://github.com/datamonday/CPP-Learning
+
+---
+C知识概览
 - 初步认识
 - 数据类型
 - 运算符和表达式
@@ -18,7 +24,7 @@
 
 ---
 
-# 1. 初步认识
+# 1. C 初步认识
 
 ## 1.1 C 简介
 
@@ -428,8 +434,8 @@ void 类型指定没有可用的值。它通常用于以下三种情况下：
 | :----- | :----------------------------------------------------------- |
 | char   | 通常是一个字节（八位）, 这是一个整数类型。                   |
 | int    | 整型，4 个字节，取值范围 -2147483648 到 2147483647。         |
-| float  | 单精度浮点值。单精度是这样的格式，1位符号，8位指数，23位小数。![img](https://www.runoob.com/wp-content/uploads/2014/09/v2-749cc641eb4d5dafd085e8c23f8826aa_hd.png) |
-| double | 双精度浮点值。双精度是1位符号，11位指数，52位小数。![img](https://www.runoob.com/wp-content/uploads/2014/09/v2-48240f0e1e0dd33ec89100cbe2d30707_hd.png) |
+| float  | 单精度浮点值。单精度是这样的格式，1位符号，8位指数，23位小数。![img](./imgs/float1.png) |
+| double | 双精度浮点值。双精度是1位符号，11位指数，52位小数。![img](./imgs/float2.png) |
 | void   | 表示类型的缺失。                                             |
 
 ## 3.1 变量初始化
@@ -735,11 +741,10 @@ C语言的两种定义常量的方式：
       return 0;
    ```
 
-   
 
-![img](https://www.runoob.com/wp-content/uploads/2014/09/c-const-2021-01-15.png)
+![img](./imgs/c-const-1.png)
 
-![img](https://www.runoob.com/wp-content/uploads/2014/09/c-const-2021-01-15-2.png)
+![image-20210424104844333](./imgs/c-const-2.png)
 
 
 
@@ -1292,7 +1297,7 @@ C 语言把任何**非零**和**非空**的值假定为 **true**，把**零**或
 
 下面是大多数编程语言中典型的判断结构的一般形式：
 
-![C 中的判断语句](https://static.runoob.com/wp-content/uploads/c/C-decision-20200923-1.svg)
+![C 中的判断语句](./imgs/C-decision-1.svg)
 
 ---
 
@@ -1376,7 +1381,7 @@ Exp1 ? Exp2 : Exp3;
 - 如果 Exp1 为真，则计算 Exp2 的值，结果即为整个表达式的值。
 - 如果 Exp1 为假，则计算 Exp3 的值，结果即为整个表达式的值。
 
-![img](https://www.runoob.com/wp-content/uploads/2014/09/Conditional-Statement-in-C-Programming-Lanuage-Ternary-Operator.png)
+![img](./imgs/Conditional-Statement-in-C-Programming-Lanuage-Ternary-Operator.png)
 
 ```c
 #include<stdio.h>
@@ -1424,7 +1429,7 @@ for(表达式1; 表达式2; 表达式3){
 
 for循环语句中，首先初始化循环变量的值，然后判断条件，之后运行循环体，最后进行++或--操作。第二轮循环，首先判断条件，如果不满足则跳出循环；如果满足，则继续执行循环体。
 
-![img](http://c.biancheng.net/uploads/allimg/181228/13401Q911-0.jpg)
+![img](./imgs/for loop.jpg)
 
 ### 2）while循环
 
@@ -1436,7 +1441,7 @@ while(Exp_cntrl)
 }
 ```
 
-![img](http://c.biancheng.net/uploads/allimg/180831/2-1PS1095045457.jpg)
+![img](./imgs/while loop.jpg)
 
 ### 3）do...while循环
 
@@ -1447,7 +1452,7 @@ do{
 }while(Exp_cntrl);//分号不可丢
 ```
 
-![img](http://c.biancheng.net/uploads/allimg/180831/2-1PS1095S5513.jpg)
+![img](./imgs/do while loop.jpg)
 
 
 
@@ -1588,10 +1593,6 @@ extern int max (int a,int b)
 
 C 语言规定，如果在定义函数时省略 `extern`，则默认为外部函数。
 
-
-
----
-
 ## 8.3 调用函数
 
 当程序调用函数时，程序控制权会转移给被调用的函数。被调用的函数执行已定义的任务，当函数的返回语句被执行时，或到达函数的结束括号时，会把程序控制权交还给主程序。
@@ -1634,16 +1635,6 @@ int max(int num1, int num2)
 }
 ```
 
----
-
-
-
-
-
-
-
-
-
 ## 8.4 函数传参
 
 如果函数要使用参数，则必须声明接受参数值的变量。这些变量称为函数的**形式参数**。
@@ -1658,8 +1649,6 @@ int max(int num1, int num2)
 | [引用调用](https://www.runoob.com/cprogramming/c-function-call-by-pointer.html) | 通过指针传递方式，形参为指向实参地址的指针，当对形参的指向操作时，就相当于对实参本身进行的操作。 |
 
 <font color=red>默认情况下，C 使用**传值调用**来传递参数。这意味着函数内的代码不能改变用于调用函数的实际参数。</font>
-
----
 
 ### 1）值传参
 
