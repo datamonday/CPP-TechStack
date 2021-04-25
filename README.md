@@ -6,7 +6,7 @@ This warehouse contains the notes recorded in the process of learning the knowle
 
 > Contributor: datamonday
 > 
-> Repo: https://github.com/datamonday/CPP-Learning
+> Repo: https://github.com/datamonday/CPP-TechStack
 
 ---
 <!-- TOC -->

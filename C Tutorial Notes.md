@@ -2,7 +2,7 @@
 ---
 > Contributor: datamonday
 >
-> Repo: https://github.com/datamonday/CPP-Learning
+> Repo: https://github.com/datamonday/CPP-TechStack
 
 ---
 C知识概览
@@ -357,7 +357,7 @@ C语言中的类型可以分为：
 
 ---
 
-## 2.1 整数类型（int、char、short、long）
+## 2.1 整型 (int,char,short,long)
 
 | 类型           | 存储大小    | 值范围                                               |
 | :------------- | :---------- | :--------------------------------------------------- |
@@ -387,7 +387,7 @@ int main()
 
 ---
 
-## 2.2 浮点类型（float、double）
+## 2.2 浮点 (float,double)
 
 | 类型        | 存储大小 | 值范围                 | 精度      |
 | :---------- | :------- | :--------------------- | :-------- |
@@ -395,7 +395,7 @@ int main()
 | double      | 8 字节   | 2.3E-308 到 1.7E+308   | 15 位小数 |
 | long double | 16 字节  | 3.4E-4932 到 1.1E+4932 | 19 位小数 |
 
-头文件 float.h 定义了宏，在程序中可以使用这些值和其他有关实数二进制表示的细节。
+**头文件 float.h 定义了宏，在程序中可以使用这些值和其他有关实数二进制表示的细节**。
 
 ```c
 #include <stdio.h>
@@ -414,7 +414,7 @@ int main()
 
 **%E** 为以指数形式输出单、双精度实数。
 
-## 2.3 void 类型
+## 2.3 void
 
 void 类型指定没有可用的值。它通常用于以下三种情况下：
 
@@ -423,6 +423,127 @@ void 类型指定没有可用的值。它通常用于以下三种情况下：
 | 1    | **函数返回为空** <br>C 中有各种函数都不返回值，或者您可以说它们返回空。不返回值的函数的返回类型为空。例如 **void exit (int status);** |
 | 2    | **函数参数为空**<br/> C 中有各种函数不接受任何参数。不带参数的函数可以接受一个 void。例如 **int rand(void);** |
 | 3    | **指针指向 void**<br/> 类型为 `void *` 的指针代表对象的地址，而不是类型。例如，内存分配函数 `void *malloc( size_t size )`; 返回指向 void 的指针，可以转换为任何数据类型。 |
+
+## 2.4 枚举 (类似Python集合)
+
+枚举是 C 语言中的一种基本数据类型，它可以让数据更简洁，更易读。
+
+枚举语法定义格式为：
+
+```c
+enum　枚举名　{枚举元素1,枚举元素2,...};
+```
+
+例如：一星期有 7 天，如果不用枚举，需要使用 #define 来为每个整数定义一个别名：
+
+```c
+#define MON  1 
+#define TUE  2 
+#define WED  3 
+#define THU  4 
+#define FRI  5 
+#define SAT  6 
+#define SUN  7
+```
+
+使用枚举的方式：
+
+```c
+enum DAY
+{
+      MON=1, TUE, WED, THU, FRI, SAT, SUN
+};
+```
+
+**注**：第一个枚举成员的默认值为整型的 0，后续枚举成员的值在前一个成员上加 1。这个实例中把第一个枚举成员的值定义为 1，第二个为 2，以此类推。
+
+可以在定义枚举类型时改变枚举元素的值：
+```c
+enum season {spring, summer=3, autumn, winter};
+```
+**没有指定值的枚举元素，其值为前一元素加 1**。也就说 spring 的值为 0，summer 的值为 3，autumn 的值为 4，winter 的值为 5。
+
+---
+
+前面只是声明了枚举类型，接下来看看如何定义枚举变量。
+
+**有三种方式来定义枚举变量**：
+
+**1. 先定义枚举类型，再定义枚举变量**
+
+```c
+enum DAY
+{
+    MON=1, TUE, WED, THU, FRI, SAT, SUN
+};
+enum DAY day;
+```
+
+**2. 定义枚举类型的同时定义枚举变量**
+
+```c
+enum DAY
+{
+    MON=1, TUE, WED, THU, FRI, SAT, SUN
+} day;
+```
+
+**3. 省略枚举名称，直接定义枚举变量**
+
+```c
+enum
+{
+    MON=1, TUE, WED, THU, FRI, SAT, SUN
+} day;
+```
+
+在C 语言中，枚举类型是被当做 int 或者 unsigned int 类型来处理的，所以按照 C 语言规范是没有办法遍历枚举类型的。不过在一些特殊的情况下，枚举类型必须连续是可以实现有条件的遍历。如果枚举类型不连续，则枚举无法遍历。
+
+在 case 语句中使用枚举类型：
+
+```c
+# include "stdio.h"
+# include "stdlib.h"
+
+//enum DAY {
+//	MON = 1, TUE, WED, THU, FRI, SAT, SUN
+//} day;
+//
+//int main() {
+//	for (day = MON; day <= SUN; ++day) {
+//		printf("枚举元素：%d\n", day);
+//	}
+//}
+
+int main()
+{
+    enum color { red=1, green, blue };
+ 
+    enum  color favorite_color;
+ 
+    /* 用户输入数字来选择颜色 */
+    printf("请输入你喜欢的颜色: (1. red, 2. green, 3. blue): ");
+    scanf("%u", &favorite_color);
+ 
+    /* 输出结果 */
+    switch (favorite_color)
+    {
+    	case red:
+    		printf("你喜欢的颜色是红色");
+    		break;
+    	case green:
+        	printf("你喜欢的颜色是绿色");
+        	break;
+    	case blue:
+        	printf("你喜欢的颜色是蓝色");
+        	break;
+    	default:
+        	printf("你没有选择你喜欢的颜色");
+    }
+
+    return 0;
+}
+```
 
 ---
 
@@ -447,6 +568,20 @@ void 类型指定没有可用的值。它通常用于以下三种情况下：
 初始化相当于给对应的内存空间赋值，变量指向该内存空间，也就被初始化了。 
 
 **程序运行完之后，操作系统回收内存空间，但并不会清空内存空间中遗留下来的数据**。
+
+---
+
+**初始化局部变量和全局变量**：当局部变量被定义时，系统不会对其初始化，必须自行对其初始化。**定义全局变量时，系统会自动对其初始化**：
+
+| 数据类型 | 初始化默认值 |
+| :------- | :----------- |
+| int      | 0            |
+| char     | '\0'         |
+| float    | 0            |
+| double   | 0            |
+| pointer  | NULL         |
+
+正确地初始化变量是一个良好的编程习惯，否则有时候程序可能会产生意想不到的结果，因为未初始化的变量会导致一些在内存位置中已经可用的垃圾值。
 
 ---
 
@@ -1028,7 +1163,7 @@ int main()
 
 ---
 
-## 6.3 逻辑运算符（&&、||、!）
+## 6.3 逻辑运算符（&& || !）
 
 下表显示了 C 语言支持的所有关系逻辑运算符<font color=red>**（Python中与之对应的是：and、or、not）**</font>。假设变量 **A** 的值为 1，变量 **B** 的值为 0，则：
 
@@ -1040,7 +1175,7 @@ int main()
 
 ---
 
-## 6.4 位运算符（&、|、^）
+## 6.4 位运算符（& | ^）
 
 **位运算符作用于位，并逐位执行操作**。`&`、 `|` 和 `^` 的真值表如下所示：
 
@@ -2003,9 +2138,284 @@ int is_prime(int x) {
 
 # 9. 数组
 
-数组（Array）就是一些列具有相同类型的数据的集合，这些数据在内存中依次挨着存放，彼此之间没有缝隙。
+**数组（Array）**就是**一系列具有相同类型的数据的集合**，这些数据在内存中依次挨着存放，彼此之间没有缝隙。即**所有的数组元素都是由连续的内存位置组成**。最低的地址对应第一个元素，最高的地址对应最后一个元素。数组中的特定元素可以通过索引访问，第一个索引值为 0。
 
-C语言数组属于构造数据类型。一个数组可以分解为多个数组元素，这些数组元素可以是基本数据类型或是构造类型。因此按数组元素的类型不同，数组又可分为数值数组、字符数组、指针数组、结构数组等各种类别。
+C语言数组属于**构造数据类型**。一个数组可以分解为多个数组元素，这些数组元素可以是基本数据类型或是构造类型。按数组元素的类型，数组又可分为数值数组、字符数组、指针数组、结构数组等。
+
+## 9.1 数组声明
+
+C 中声明数组，需要指定元素的类型和元素的数量：
+
+```c
+type arrayName [ arraySize ];
+```
+
+这叫做一维数组。**arraySize** 必须是一个大于零的整数常量，**type** 可以是任意有效的 C 数据类型。例如，声明一个类型为 double 的包含 10 个元素的数组 **balance**：
+
+```c
+double balance[10];
+```
+
+现在，balance 是一个可用的数组，可以容纳 10 个类型为 double 的数字。
+
+## 9.2 初始化数组
+
+C 中，可以逐个初始化数组，也可以使用一个初始化语句：
+
+```c
+double balance[5] = {1.0, 200.0, 333.0, 700.0, 1000.0}
+```
+
+大括号 { } 中元素的数目 <= 方括号 [ ] 中指定的元素数目。**如果省略数组的大小，数组的大小则为初始化时元素的个数**。
+
+为数组中某个元素赋值：
+
+```c
+balance[4] = 50.0;
+```
+
+上述语句把数组中第五个元素的值赋为 50.0。所有的数组都是以 0 作为第一个元素的索引（基索引），数组的最后一个索引是数组的总大小减去 1。下图是一个长度为 **10** 的数组：
+
+![img](D:\Github\ROS-Learning\imgs\c-array-1.png)
+
+## 9.3 访问数组元素
+
+数组元素可以通过数组名称加索引访问：
+
+```
+double salary = balance[9];
+```
+
+上述语句把数组中第 10 个元素的值赋给 salary 变量。
+
+下面的实例使用了上述的三个概念，即，声明数组、数组赋值、访问数组：
+
+```c
+# include "stdio.h"
+
+int main() {
+	int n[10]; // n 是一个包含10个整数的数组
+	int i, j;
+	
+	// 初始化数组元素 
+	for (i = 0; i < 10; i++) {
+		n[i] = i + 100; 
+	} 
+	
+	// 输出数组中的元素
+	for (j = 0; j < 10; j++) {
+		printf("Element[%d] = %d\n", j, n[j]);
+	} 
+	
+	return 0;
+} 
+```
+
+## 9.4 多维数组
+
+下面的声明创建了一个三维整型数组：
+
+```c
+int threedim[5][10][4];
+```
+
+一个二维数组，在本质上，是一个一维数组的列表。声明一个 x 行 y 列的二维整型数组，形式如下：
+
+```
+type arrayName [ x ][ y ];
+```
+
+其中，**type** 可以是任意有效的 C 数据类型，**arrayName** 是一个有效的 C 标识符。一个二维数组可以被认为是一个带有 x 行和 y 列的表格。下面是一个二维数组，包含 3 行和 4 列：
+
+```
+int x[3][4];
+```
+
+![C 中的二维数组](D:\Github\ROS-Learning\imgs\two_dimensional_arrays.jpg)
+
+数组中的每个元素使用形式为 a[ i , j ] 的元素名称来标识，其中 a 是数组名称，i 和 j 是唯一标识 a 中每个元素的下标。
+
+### 1）初始化二维数组
+
+多维数组可以通过在括号内为每行指定值来进行初始化。下面是一个带有 3 行 4 列的数组。
+
+```
+int a[3][4] = {  
+ {0, 1, 2, 3} ,   /*  初始化索引号为 0 的行 */
+ {4, 5, 6, 7} ,   /*  初始化索引号为 1 的行 */
+ {8, 9, 10, 11}   /*  初始化索引号为 2 的行 */
+};
+```
+
+**内部嵌套的括号是可选的，下面的初始化与上面是等同的**：
+
+```
+int a[3][4] = {0,1,2,3,4,5,6,7,8,9,10,11};
+```
+
+### 2）访问二维数组元素
+
+二维数组中的元素是通过使用下标（即数组的行索引和列索引）来访问的：
+
+```
+int val = a[2][3];
+```
+
+上面的语句将获取数组中第 3 行第 4 个元素。使用嵌套循环来处理二维数组：
+
+```c
+# include "stdio.h"
+
+int main() {
+	int a[3][2] = { {1,2}, {4,5}, {7,8}	};
+	int i, j;
+	
+	for (i = 0; i < 3; i++) {
+		for (j = 0; j < 2; j++) {
+			printf("a[%d][%d] = %d\n", i, j, a[i][j]);
+		}
+	}
+	return 0; 
+} 
+```
+
+## 9.5 传递数组给函数
+
+将数组作为参数传递给函数，有三种方式用来声明函数形参，这三种声明的方式结果是一样的，因为每种方式都会告诉编译器要接收一个整形指针。同样也可以传递一个多维数组作为形参：
+
+**方式1：形参是一个指针**。
+
+```c
+void myfunc(int *param){
+    
+}
+```
+
+**方式2：形参是一个已经定义大小的数组**。
+
+```c
+void myfunc(int param[10]){
+    
+}
+```
+
+**方式3：形参是一个未定义大小的数组**。
+
+```c
+void myfunc(int param[]){
+    
+}
+```
+
+实例：
+
+```c
+# include "stdio.h"
+
+double get_average(int arr[], int size);
+
+int main() {
+	int balance[5] = {500, 100, 100, 150, 150};
+	double avg;
+	
+	avg = get_average(balance, 5);
+	
+	printf("平均值为：%.4f", avg);
+	
+	return 0;
+} 
+
+double get_average(int arr[], int size) {
+	int i;
+	double avg;
+	double sum = 0;
+	
+	for (i=0; i < size; ++i) {
+		sum += arr[i];
+	}
+	
+	avg = sum / size;
+	
+	return avg;
+}
+```
+
+## 9.6 从函数返回数组（随机数）
+
+**C 语言不允许返回一个完整的数组作为函数的参数，但是可以指定不带所以的函数名来返回一个指向数组的指针**。
+
+如果想要从函数返回一个一维数组，必须声明一个返回指针的函数：
+
+```c
+int * myfunc(){
+
+}
+```
+
+**C 不支持在函数外返回局部变量的地址，除非定义局部变量为 static 变量**。
+
+下面的函数，它会生成 10 个随机数，并使用数组来返回它们：
+
+```c
+# include "stdio.h"
+# include "stdlib.h"
+# include "time.h"
+
+int * get_random(){
+	static int r[10];
+	int i;
+	
+	// 设置随机种子 
+	srand( (unsigned) time (NULL) );
+	for (i = 0; i < 10; ++i){
+		r[i] = rand();
+		printf("r[%d] = %d \n", i, r[i]);
+	}
+	
+	return r;
+}
+
+int main(){
+	
+	// 一个指向整数的指针
+	int *p;
+	int i;
+	
+	p = get_random();
+	
+	for (i = 0; i < 10; i++){
+		printf("*(p + %d) : %d\n", i, *(p + i));
+	} 
+	
+	return 0;
+}
+```
+
+`srand((unsigned)time(NULL))` 是初始化随机函数种子：
+
+-  其将当前系统时间作为种子，由于时间是变化的，种子变化，可以产生不相同的随机数。计算机中的随机数实际上都不是真正的随机数，如果两次给的种子一样，是会生成同样的随机序列。所以，一般都会以当前的时间作为种子来生成随机数，这样更加的随机。
+-  使用时，参数可以是unsigned型的任意数据，比如 `srand(10)`。
+
+## 9.7 指向数组的指针
+
+**数组名是一个指向数组中第一个元素的常量指针**：
+
+```c
+double balance[10];
+```
+
+**balance** 是一个指向 `&balance[0]` 的指针，即数组 balance 的第一个元素的地址。因此，**下面的程序片段把 p 赋值为 balance 的第一个元素的地址**：
+
+```c
+double *p;
+double balance[10];
+
+p = balance;
+```
+
+<font color=blue>**使用数组名作为常量指针是合法的，反之亦然**。因此，**`*(balance + 4)` 是一种访问 balance[4] 数据的合法方式**。</font>
+
+一旦把第一个元素的地址存储在 p 中，就可以使用 `*p、*(p+1)、*(p+2)` 等来访问数组元素。下面的实例演示了上面讨论到的这些概念：
 
 
 
@@ -2020,22 +2430,452 @@ C语言数组属于构造数据类型。一个数组可以分解为多个数组�
 
 
 ---
+# 11. 结构体 (类似Python字典)
 
-# 11. 结构体
+C 数组允许定义可存储相同类型数据项的变量，**结构** 是 C 编程中另一种**用户自定义的可用的数据类型**，它允许存储不同类型的数据项。
 
+结构用于表示一条记录，假设想要跟踪图书馆中书本的动态，可能需要跟踪每本书的下列属性：
 
+- Title
+- Author
+- Subject
+- Book ID
 
+## 11.1 定义结构体
 
+使用 **struct** 语句定义结构体：
+
+```c
+struct tag {
+    member-list
+    member-list
+    ...
+}variable_list;
+```
+
+- tag：结构体标签；
+
+- member-list：标准的变量定义，比如 int i 或者 float f；
+
+- variable-list：结构变量，定义在结构的末尾，最后一个分号之前，可以指定一个或多个结构体变量。下面是声明 Book 结构体的方式：
+
+  ```c
+  struct Books {
+      char title[50];
+      char author[50];
+      char subject[100];
+      int book_id;
+  }book;
+  ```
+
+一般情况下，**tag、member-list、variable-list** 至少要出现 2 个：
+
+```c
+//此声明声明了拥有3个成员的结构体，分别为整型的a，字符型的b和双精度的c
+//同时又声明了结构体变量s1
+//这个结构体并没有标明其标签
+struct 
+{
+    int a;
+    char b;
+    double c;
+} s1;
+ 
+//此声明声明了拥有3个成员的结构体，分别为整型的a，字符型的b和双精度的c
+//结构体的标签被命名为SIMPLE,没有声明变量
+struct SIMPLE
+{
+    int a;
+    char b;
+    double c;
+};
+//用SIMPLE标签的结构体，另外声明了变量t1、t2、t3
+struct SIMPLE t1, t2[20], *t3;
+ 
+//也可以用typedef创建新类型
+typedef struct
+{
+    int a;
+    char b;
+    double c; 
+} Simple2;
+//现在可以用Simple2作为类型声明新的结构体变量
+Simple2 u1, u2[20], *u3;
+```
+
+在上面的声明中，第一个和第二声明被编译器当作两个完全不同的类型，即使他们的成员列表是一样的，如果令 t3=&s1，则是非法的。
+
+**结构体的成员可以包含其他结构体，也可以包含指向自己结构体类型的指针，而通常这种指针的应用是为了实现一些更高级的数据结构如链表和树等**。
+
+```c
+//此结构体的声明包含了其他的结构体
+struct COMPLEX
+{
+    char string[100];
+    struct SIMPLE a;
+};
+ 
+//此结构体的声明包含了指向自己类型的指针
+struct NODE
+{
+    char string[100];
+    struct NODE *next_node;
+};
+```
+
+**如果两个结构体互相包含，则需要对其中一个结构体进行不完整声明**：
+
+```c
+struct B;    //对结构体B进行不完整声明
+ 
+//结构体A中包含指向结构体B的指针
+struct A
+{
+    struct B *partner;
+    //other members;
+};
+ 
+//结构体B中包含指向结构体A的指针，在A声明完后，B也随之进行声明
+struct B
+{
+    struct A *partner;
+    //other members;
+};
+```
+
+## 11.2 结构体变量的初始化
+
+```c
+#include <stdio.h>
+ 
+struct Books
+{
+   char  title[50];
+   char  author[50];
+   char  subject[100];
+   int   book_id;
+} book = {"C 语言", "RUNOOB", "编程语言", 123456};
+ 
+int main()
+{
+    printf("title : %s\nauthor: %s\nsubject: %s\nbook_id: %d\n", book.title, book.author, book.subject, book.book_id);
+}
+```
+
+## 11.3 访问结构成员
+
+为了访问结构的成员，使用**成员访问运算符（.）**。
+
+```c
+#include <stdio.h>
+#include <string.h>
+ 
+struct Books
+{
+   char  title[50];
+   char  author[50];
+   char  subject[100];
+   int   book_id;
+};
+ 
+int main( )
+{
+   struct Books Book1;        /* 声明 Book1，类型为 Books */
+   struct Books Book2;        /* 声明 Book2，类型为 Books */
+ 
+   /* Book1 详述 */
+   strcpy( Book1.title, "C Programming");
+   strcpy( Book1.author, "Nuha Ali"); 
+   strcpy( Book1.subject, "C Programming Tutorial");
+   Book1.book_id = 6495407;
+ 
+   /* Book2 详述 */
+   strcpy( Book2.title, "Telecom Billing");
+   strcpy( Book2.author, "Zara Ali");
+   strcpy( Book2.subject, "Telecom Billing Tutorial");
+   Book2.book_id = 6495700;
+ 
+   /* 输出 Book1 信息 */
+   printf( "Book 1 title : %s\n", Book1.title);
+   printf( "Book 1 author : %s\n", Book1.author);
+   printf( "Book 1 subject : %s\n", Book1.subject);
+   printf( "Book 1 book_id : %d\n", Book1.book_id);
+ 
+   /* 输出 Book2 信息 */
+   printf( "Book 2 title : %s\n", Book2.title);
+   printf( "Book 2 author : %s\n", Book2.author);
+   printf( "Book 2 subject : %s\n", Book2.subject);
+   printf( "Book 2 book_id : %d\n", Book2.book_id);
+ 
+   return 0;
+}
+```
+
+## 11.4 结构作为函数参数
+
+可以把结构作为函数参数，传参方式与其他类型的变量或指针类似。
+
+```c
+#include <stdio.h>
+#include <string.h>
+ 
+struct Books
+{
+   char  title[50];
+   char  author[50];
+   char  subject[100];
+   int   book_id;
+};
+ 
+/* 函数声明 */
+void printBook( struct Books book );
+int main( )
+{
+   struct Books Book1;        /* 声明 Book1，类型为 Books */
+   struct Books Book2;        /* 声明 Book2，类型为 Books */
+ 
+   /* Book1 详述 */
+   strcpy( Book1.title, "C Programming");
+   strcpy( Book1.author, "Nuha Ali"); 
+   strcpy( Book1.subject, "C Programming Tutorial");
+   Book1.book_id = 6495407;
+ 
+   /* Book2 详述 */
+   strcpy( Book2.title, "Telecom Billing");
+   strcpy( Book2.author, "Zara Ali");
+   strcpy( Book2.subject, "Telecom Billing Tutorial");
+   Book2.book_id = 6495700;
+ 
+   /* 输出 Book1 信息 */
+   printBook( Book1 );
+ 
+   /* 输出 Book2 信息 */
+   printBook( Book2 );
+ 
+   return 0;
+}
+void printBook( struct Books book )
+{
+   printf( "Book title : %s\n", book.title);
+   printf( "Book author : %s\n", book.author);
+   printf( "Book subject : %s\n", book.subject);
+   printf( "Book book_id : %d\n", book.book_id);
+}
+```
 
 ---
 
-# 12. 共用体
+## 11.5 指向结构体的指针
 
+可以定义指向结构体的指针，方式与定义指向其他类型变量的指针相似：
 
+```c
+struct Books *struct_pointer;
+```
 
+现在，可以在上述定义的指针变量中存储结构体变量的地址。为了查找结构变量的地址，需把 `&` 运算符放在结构体名称前：
 
+```c
+struct_pointer = &Book1;
+```
 
+为了**使用指向该结构的指针访问结构的成员，必须使用 `->` 运算符**：
 
+```c
+struct_pointer -> title;
+```
+
+使用结构指针来重写上面的实例，以便理解结构体指针的概念：
+
+```c
+#include <stdio.h>
+#include <string.h>
+ 
+struct Books
+{
+    char  title[50];
+    char  author[50];
+    char  subject[100];
+    int   book_id;
+};
+ 
+/* 函数声明 */
+void printBook( struct Books *book );
+int main( )
+{
+    struct Books Book1;        /* 声明 Book1，类型为 Books */
+    struct Books Book2;        /* 声明 Book2，类型为 Books */
+    
+    /* Book1 详述 */
+    strcpy( Book1.title, "C Programming");
+    strcpy( Book1.author, "Nuha Ali"); 
+    strcpy( Book1.subject, "C Programming Tutorial");
+    Book1.book_id = 6495407;
+ 
+    /* Book2 详述 */
+    strcpy( Book2.title, "Telecom Billing");
+    strcpy( Book2.author, "Zara Ali");
+    strcpy( Book2.subject, "Telecom Billing Tutorial");
+    Book2.book_id = 6495700;
+ 
+    /* 通过传 Book1 的地址来输出 Book1 信息 */
+    printBook( &Book1 );
+ 
+    /* 通过传 Book2 的地址来输出 Book2 信息 */
+    printBook( &Book2 );
+ 
+    return 0;
+}
+void printBook( struct Books *book )
+{
+    printf( "Book title : %s\n", book->title);
+    printf( "Book author : %s\n", book->author);
+    printf( "Book subject : %s\n", book->subject);
+    printf( "Book book_id : %d\n", book->book_id);
+}
+```
+
+---
+
+# 12. 共用体（union）
+
+<font color=red>**共用体是一种特殊的数据类型，允许在相同的内存位置存储不同的数据类型。可以定义一个带有多成员的共用体，但是任何时候只能有一个成员带有值**</font>。共用体提供了一种使用相同的内存位置的有效方式。
+
+## 12.1 定义共用体
+
+使用 **union** 语句定义共用体，方式与定义结构类似。union 语句定义了一个新的数据类型，带有多个成员。union 语句的格式如下：
+
+```c
+union [union tag]
+{
+   member definition;
+   member definition;
+   ...
+   member definition;
+} [one or more union variables];
+```
+
+**union tag** 是可选的，每个 member definition 是标准的变量定义，比如 int i，float f或者其他有效的变量定义。在共用体定义的末尾，可以指定一个或多个共用体变量，这是可选的。下面定义一个名为 Data 的共用体类型，有三个成员 i、f 和 str：
+
+```c
+union Data
+{
+    int i;
+    float f;
+    char str[20];
+} data;
+```
+
+**共用体占用的内存应足够存储共用体中最大的成员**。例如，在上面的实例中，Data 将占用 20 个字节的内存空间，因为在各个成员中，字符串所占用的空间是最大的。下面的实例将显示上面的共用体占用的总内存大小：
+
+```c
+#include <stdio.h>
+#include <string.h>
+ 
+union Data
+{
+   int i;
+   float f;
+   char  str[20];
+};
+ 
+int main( )
+{
+   union Data data;        
+ 
+   printf( "Memory size occupied by data : %d\n", sizeof(data));
+ 
+   return 0;
+}
+```
+
+## 12.2 与结构体的区别
+
+**结构体变量所占内存长度是其中最大字段大小的整数倍**（参考：[结构体大小的计算](https://www.runoob.com/w3cnote/struct-size.html)）。
+
+**共用体变量所占的内存长度等于最长的成员变量的长度**。例如，教程中定义的共用体Data各占20个字节（因为char str[20]变量占20个字节），而不是各占4+4+20=28个字节。
+
+```c
+union Data
+{
+   int i;
+   float f;
+   char  str[20];
+} data;  
+```
+
+**节省内存**，有两个很长的数据结构，不会同时使用，比如一个表示老师，一个表示学生，如果要统计教师和学生的情况用结构体的话就有点浪费了！用共用体的话，只占用最长的那个数据结构所占用的空间，就足够了！
+
+**共用体应用场景**：通信中的数据包会用到共用体，因为不知道对方会发一个什么包过来，用共用体的话就很简单了，定义几种格式的包，收到包之后就可以直接根据包的格式取出数据。
+
+## 12.3 访问共用体成员
+
+使用**成员访问运算符 (.)** 访问共用体的成员。
+
+```c
+#include <stdio.h>
+#include <string.h>
+ 
+union Data
+{
+   int i;
+   float f;
+   char  str[20];
+};
+ 
+int main( )
+{
+   union Data data;        
+ 
+   data.i = 10;
+   data.f = 220.5;
+   strcpy( data.str, "C Programming");
+ 
+   printf( "data.i : %d\n", data.i);
+   printf( "data.f : %f\n", data.f);
+   printf( "data.str : %s\n", data.str);
+ 
+   return 0;
+}
+```
+
+**在同一时间只使用一个变量，这也演示了使用共用体的主要目的**：
+
+```c
+#include <stdio.h>
+#include <string.h>
+ 
+union Data
+{
+   int i;
+   float f;
+   char  str[20];
+};
+ 
+int main( )
+{
+   union Data data;        
+ 
+   data.i = 10;
+   printf( "data.i : %d\n", data.i);
+   
+   data.f = 220.5;
+   printf( "data.f : %f\n", data.f);
+   
+   strcpy( data.str, "C Programming");
+   printf( "data.str : %s\n", data.str);
+ 
+   return 0;
+}
+```
+
+输出：
+
+```c
+data.i : 10
+data.f : 220.500000
+data.str : C Programming
+```
 
 ---
 
@@ -2159,7 +2999,7 @@ fgets函数功能：从文件指针stream中读取字符，存到以s为起始�
 
 所有的文件（保存在磁盘）都要载入内存才能处理，所有的数据必须写入文件（磁盘）才不会丢失。文件是数据源的一种，除了文件，还有数据库、网络、键盘等；数据传递到内存也就是保存到C语言的变量（例如整数、字符串、数组、缓冲区等）。我们把数据在数据源和程序（内存）之间传递的过程叫做**数据流(Data Stream)**。数据从数据源到程序（内存）的过程叫做**输入流(Input Stream)**，从程序（内存）到数据源的过程叫做**输出流(Output Stream)**。
 
-## 14.1 fopen( ) 打开文件
+## 14.1 fopen() 打开文件
 
  **fopen( )** 函数来创建一个新的文件或者打开一个已有的文件，这个调用会初始化类型 **FILE** 的一个对象，类型 **FILE** 包含了所有用来控制流的必要的信息。
 
@@ -2404,33 +3244,615 @@ rewind()函数用于将文件指针重新指向文件的开头，同时清除和
 
 ---
 
-# 16. 预处理命令
+# 16. typedef 与 预处理命令
 
+## 16.1 typedef
 
+**typedef 关键字用来为类型取一个新的名字**。下例为单字节数字定义术语 **BYTE**：
 
+```c
+typedef unsigned char BYTE;
+typedef unsigned char byte;
+```
 
+按照惯例，定义时会大写字母，以便提醒用户类型名称是一个象征性的缩写，但也可以使用小写字母。
 
+类型定义后，标识符 BYTE 可作为类型 **unsigned char** 的缩写：
 
+```c
+BYTE  b1, b2;
+```
+
+可以对结构体使用 typedef 来定义一个新的数据类型名字，然后使用这个新的数据类型来直接定义结构变量：
+
+```c
+#include <stdio.h>
+#include <string.h>
+ 
+typedef struct Books
+{
+   char  title[50];
+   char  author[50];
+   char  subject[100];
+   int   book_id;
+} Book;
+ 
+int main( )
+{
+   Book book;
+ 
+   strcpy( book.title, "C 教程");
+   strcpy( book.author, "Runoob"); 
+   strcpy( book.subject, "编程语言");
+   book.book_id = 12345;
+ 
+   printf( "书标题 : %s\n", book.title);
+   printf( "书作者 : %s\n", book.author);
+   printf( "书类目 : %s\n", book.subject);
+   printf( "书 ID : %d\n", book.book_id);
+ 
+   return 0;
+}
+```
+
+## 16.2 typedef vs #define
+
+**#define** 是 C 指令，用于为各种数据类型定义别名，与 **typedef** 类似，但是它们有以下几点不同：
+
+- **typedef** 仅限于为类型定义符号名称，**#define** 不仅可以为类型定义别名，也能为数值定义别名，比如您可以定义 1 为 ONE。
+- <font color=red>**typedef** 是由编译器执行解释的，**#define** 语句是由预编译器进行处理的。</font>
+
+下面是 #define 的最简单的用法：
+
+```c
+#include <stdio.h>
+
+#define TRUE  1
+#define FALSE 0
+
+int main( )
+{
+    printf( "TRUE 的值: %d\n", TRUE);
+    printf( "FALSE 的值: %d\n", FALSE);
+    
+    return 0;
+}
+```
+
+---
+
+## 16.3 预处理器
+
+**C 预处理器**不是编译器的组成部分，但是它是编译过程中一个单独的步骤。简言之，**C 预处理器只不过是一个文本替换工具而已，它们会指示编译器在实际编译之前完成所需的预处理**。把 C 预处理器（C Preprocessor）简写为 CPP。
+
+所有的预处理器命令都是以井号（#）开头。它必须是第一个非空字符，为了增强可读性，预处理器指令应从第一列开始。下面列出了所有重要的预处理器指令：
+
+| 指令     | 描述                                                        |
+| :------- | :---------------------------------------------------------- |
+| #define  | 定义宏                                                      |
+| #include | 包含一个源代码文件                                          |
+| #undef   | 取消已定义的宏                                              |
+| #ifdef   | 如果宏已经定义，则返回真                                    |
+| #ifndef  | 如果宏没有定义，则返回真                                    |
+| #if      | 如果给定条件为真，则编译下面代码                            |
+| #else    | #if 的替代方案                                              |
+| #elif    | 如果前面的 #if 给定条件不为真，当前条件为真，则编译下面代码 |
+| #endif   | 结束一个 #if……#else 条件编译块                              |
+| #error   | 当遇到标准错误时，输出错误消息                              |
+| #pragma  | 使用标准化方法，向编译器发布特殊的命令到编译器中            |
+
+分析下面的实例来理解不同的指令。
+
+```c
+#define MAX_ARRAY_LENGTH 20
+```
+
+这个指令告诉 CPP 把所有的 MAX_ARRAY_LENGTH 替换为 20。使用 *#define* 定义常量来增强可读性。
+
+```c
+#include <stdio.h>
+#include "myheader.h"
+```
+
+这些指令告诉 CPP 从**系统库**中获取 stdio.h，并添加文本到当前的源文件中。下一行告诉 CPP 从本地目录中获取 **myheader.h**，并添加内容到当前的源文件中。
+
+```c
+#undef  FILE_SIZE
+#define FILE_SIZE 42
+```
+
+这个指令告诉 CPP 取消已定义的 FILE_SIZE，并定义它为 42。
+
+```c
+#ifndef MESSAGE
+   #define MESSAGE "You wish!"
+#endif
+```
+
+这个指令告诉 CPP 只有当 MESSAGE 未定义时，才定义 MESSAGE。
+
+```c
+#ifdef DEBUG
+   /* Your debugging statements here */
+#endif
+```
+
+这个指令告诉 CPP 如果定义了 DEBUG，则执行处理语句。在编译时，如果您向 gcc 编译器传递了 *-DDEBUG* 开关量，这个指令就非常有用。它定义了 DEBUG，可以在编译期间随时开启或关闭调试。
+
+## 16.4 预定义宏
+
+在编程中可以使用 ANSI C 定义的宏，但是不能直接修改预定义的宏。
+
+| 宏       | 描述                                                |
+| :------- | :-------------------------------------------------- |
+| __DATE__ | 当前日期，一个以 "MMM DD YYYY" 格式表示的字符常量。 |
+| __TIME__ | 当前时间，一个以 "HH:MM:SS" 格式表示的字符常量。    |
+| __FILE__ | 这会包含当前文件名，一个字符串常量。                |
+| __LINE__ | 这会包含当前行号，一个十进制常量。                  |
+| __STDC__ | 当编译器以 ANSI 标准编译时，则定义为 1。            |
+
+尝试下面的实例：
+
+```c
+#include <stdio.h>
+
+main()
+{
+   printf("File :%s\n", __FILE__ );
+   printf("Date :%s\n", __DATE__ );
+   printf("Time :%s\n", __TIME__ );
+   printf("Line :%d\n", __LINE__ );
+   printf("ANSI :%d\n", __STDC__ );
+
+}
+```
+
+当上面的代码（在文件 **test.c** 中）被编译和执行时，它会产生下列结果：
+
+```c
+File :test.c
+Date :Jun 2 2012
+Time :03:36:24
+Line :8
+ANSI :1
+```
+
+## 16.5 预处理器运算符
+
+C 预处理器提供了下列的运算符来创建宏：
+
+#### 宏延续运算符（\）
+
+一个宏通常写在一个单行上。但是如果宏太长，一个单行容纳不下，则使用宏延续运算符（\）。例如：
+
+```c
+#define  message_for(a, b)  \
+    printf(#a " and " #b ": We love you!\n")
+```
+
+#### 字符串常量化运算符（#）
+
+在宏定义中，当需要把一个宏的参数转换为字符串常量时，则使用字符串常量化运算符（#）。在宏中使用的该运算符有一个特定的参数或参数列表。例如：
+
+```c
+#include <stdio.h>
+
+#define  message_for(a, b)  \
+    printf(#a " and " #b ": We love you!\n")
+
+int main(void)
+{
+   message_for(Carole, Debra);
+   return 0;
+}
+```
+
+当上面的代码被编译和执行时，它会产生下列结果：
+
+```c
+Carole and Debra: We love you!
+```
+
+#### 标记粘贴运算符（##）
+
+宏定义内的标记粘贴运算符（##）会合并两个参数。它允许在宏定义中两个独立的标记被合并为一个标记。例如：
+
+```c
+#include <stdio.h>
+
+#define tokenpaster(n) printf ("token" #n " = %d", token##n)
+
+int main(void)
+{
+   int token34 = 40;
+   
+   tokenpaster(34);
+   return 0;
+}
+```
+
+当上面的代码被编译和执行时，它会产生下列结果：
+
+```c
+token34 = 40
+```
+
+这是怎么发生的，因为这个实例会从编译器产生下列的实际输出：
+
+```c
+printf ("token34 = %d", token34);
+```
+
+这个实例演示了 token##n 会连接到 token34 中，在这里，使用了**字符串常量化运算符（#）**和**标记粘贴运算符（##）**。
+
+#### defined() 运算符
+
+预处理器 **defined** 运算符是用在常量表达式中的，用来确定一个标识符是否已经使用 #define 定义过。如果指定的标识符已定义，则值为真（非零）。如果指定的标识符未定义，则值为假（零）。下面的实例演示了 defined() 运算符的用法：
+
+```c
+#include <stdio.h>
+
+#if !defined (MESSAGE)
+   #define MESSAGE "You wish!"
+#endif
+
+int main(void)
+{
+   printf("Here is the message: %s\n", MESSAGE);  
+   return 0;
+}
+```
+
+当上面的代码被编译和执行时，它会产生下列结果：
+
+```c
+Here is the message: You wish!
+```
+
+## 16.6 参数化的宏
+
+CPP 一个强大的功能是可以使用参数化的宏来模拟函数。例如，下面的代码是计算一个数的平方：
+
+```c
+int square(int x) {
+   return x * x;
+}
+```
+
+我们可以使用宏重写上面的代码，如下：
+
+```c
+#define square(x) ((x) * (x))
+```
+
+在使用带有参数的宏之前，必须使用 **#define** 指令定义。参数列表是括在圆括号内，且必须紧跟在宏名称的后边。宏名称和左圆括号之间不允许有空格。例如：
+
+```c
+#include <stdio.h>
+
+#define MAX(x,y) ((x) > (y) ? (x) : (y))
+
+int main(void)
+{
+   printf("Max between 20 and 10 is %d\n", MAX(10, 20));  
+   return 0;
+}
+```
+
+当上面的代码被编译和执行时，它会产生下列结果：
+
+```c
+Max between 20 and 10 is 20
+```
 
 ---
 
 # 17. 头文件编写
 
+头文件是扩展名为 **.h** 的文件，包含了 C 函数声明和宏定义，被多个源文件中引用共享。有两种类型的头文件：程序员编写的头文件和编译器自带的头文件。
 
+在程序中要使用头文件，需要使用 C 预处理指令 **#include** 来引用它。前面我们已经看过 **stdio.h** 头文件，它是编译器自带的头文件。
 
+引用头文件相当于复制头文件的内容，但是我们不会直接在源文件中复制头文件的内容，因为这么做很容易出错，特别在程序是由多个源文件组成的时候。
 
+A simple practice in C 或 C++ 程序中，建议把所有的常量、宏、系统全局变量和函数原型写在头文件中，在需要的时候随时引用这些头文件。
 
+## 17.1 引用头文件
 
+使用预处理指令 **#include** 可以引用用户和系统头文件。它的形式有以下两种：
+
+```c
+#include <file>
+```
+
+**这种形式用于引用系统头文件**。它在系统目录的标准列表中搜索名为 file 的文件。在编译源代码时，可以通过 -I 选项把目录前置在该列表前。
+
+```c
+#include "file"
+```
+
+**这种形式用于引用用户头文件**。它在包含当前文件的目录中搜索名为 file 的文件。在编译源代码时，可以通过 -I 选项把目录前置在该列表前。
+
+## 17.2 引用头文件的操作
+
+**#include** 指令会指示 C 预处理器浏览指定的文件作为输入。预处理器的输出包含了已经生成的输出，被引用文件生成的输出以及 **#include** 指令之后的文本输出。例如，如果有一个头文件 header.h：
+
+```c
+char *test (void);
+```
+
+和一个使用了头文件的主程序 program.c：
+
+```c
+int x;
+#include "header.h"
+
+int main (void)
+{
+   puts (test ());
+}
+```
+
+编译器会看到如下的代码信息：
+
+```c
+int x;
+char *test (void);
+
+int main (void)
+{
+   puts (test ());
+}
+```
+
+## 17.3 只引用一次头文件
+
+如果一个头文件被引用两次，编译器会处理两次头文件的内容，这将产生错误。为了防止这种情况，标准的做法是把文件的整个内容放在条件编译语句中，如下：
+
+```c
+#ifndef HEADER_FILE
+#define HEADER_FILE
+
+the entire header file file
+
+#endif
+```
+
+这种结构就是通常所说的包装器 **#ifndef**。当再次引用头文件时，条件为假，因为 HEADER_FILE 已定义。此时，预处理器会跳过文件的整个内容，编译器会忽略它。
+
+## 17.4 有条件引用
+
+有时需要从多个不同的头文件中选择一个引用到程序中。例如，需要指定在不同的操作系统上使用的配置参数。可以通过一系列条件来实现这点：
+
+```c
+#if SYSTEM_1
+   # include "system_1.h"
+#elif SYSTEM_2
+   # include "system_2.h"
+#elif SYSTEM_3
+   ...
+#endif
+```
+
+但是如果头文件比较多，这么做很不妥当，预处理器使用宏来定义头文件的名称。这就是所谓的**有条件引用**。它不是用头文件的名称作为 **#include** 的直接参数，只需要使用宏名称代替即可：
+
+```c
+ #define SYSTEM_H "system_1.h"
+ ...
+ #include SYSTEM_H
+```
+
+SYSTEM_H 会扩展，预处理器会查找 system_1.h，就像 **#include** 最初编写的那样。SYSTEM_H 可通过 -D 选项被你的 Makefile 定义。
 
 ---
 
 # 18. 其它知识
 
-## 18.1 共用体
+## 18.1 位域
 
+如果程序的结构中包含多个开关量，只有 **TRUE/FALSE** 变量，如下：
 
+```c
+struct
+{
+  unsigned int widthValidated;
+  unsigned int heightValidated;
+} status;
+```
+
+这种结构需要 8 字节的内存空间，但每个变量只存储 0 或 1。在这种情况下，C 语言提供了一种更好的利用内存空间的方式。如果在结构体内使用这样的变量，可以定义变量的宽度来告诉编译器。例如，上面的结构可以重写成：
+
+```c
+struct
+{
+  unsigned int widthValidated : 1;
+  unsigned int heightValidated : 1;
+} status;
+```
+
+现在，上面的结构中，status 变量将占用 4 个字节的内存空间，但是只有 2 位被用来存储值。如果用了 32 个变量，每一个变量宽度为 1 位，那么 status 结构将使用 4 个字节，但只要您再多用一个变量，如果使用了 33 个变量，那么它将分配内存的下一段来存储第 33 个变量，这个时候就开始使用 8 个字节。
+
+```c
+#include <stdio.h>
+#include <string.h>
+ 
+/* 定义简单的结构 */
+struct
+{
+  unsigned int widthValidated;
+  unsigned int heightValidated;
+} status1;
+ 
+/* 定义位域结构 */
+struct
+{
+  unsigned int widthValidated : 1;
+  unsigned int heightValidated : 1;
+} status2;
+ 
+int main( )
+{
+   printf( "Memory size occupied by status1 : %d\n", sizeof(status1));
+   printf( "Memory size occupied by status2 : %d\n", sizeof(status2));
+ 
+   return 0;
+}
+```
+
+当上面的代码被编译和执行时，它会产生下列结果：
+
+```c
+Memory size occupied by status1 : 8
+Memory size occupied by status2 : 4
+```
+
+有些信息在存储时，并不需要占用一个完整的字节，而只需占几个或一个二进制位。例如在存放一个开关量时，只有 0 和 1 两种状态，用 1 位二进位即可。为了节省存储空间，并使处理简便，C 语言又提供了一种数据结构，称为**位域** 或 **位段**。
+
+位域：把一个字节中的二进位划分为几个不同的区域，并说明每个区域的位数。每个域有一个域名，允许在程序中按域名进行操作。这样就可以把几个不同的对象用一个字节的二进制位域来表示。
+
+典型的实例：
+
+- 用 1 位二进位存放一个开关量时，只有 0 和 1 两种状态。
+- 读取外部文件格式——可以读取非标准的文件格式。例如：9 位的整数。
+
+位域定义与结构定义体类似：
+
+```c
+struct 位域结构名 
+{
+
+ 位域列表
+
+};
+```
+
+其中位域列表的形式为：
+
+```c
+type [member_name] : width ;
+```
+
+下面是有关位域中变量元素的描述：
+
+| 元素        | 描述                                                         |
+| :---------- | :----------------------------------------------------------- |
+| type        | 只能为 int(整型)，unsigned int(无符号整型)，signed int(有符号整型) 三种类型，决定了如何解释位域的值。 |
+| member_name | 位域的名称。                                                 |
+| width       | 位域中位的数量。宽度必须小于或等于指定类型的位宽度。         |
+
+带有预定义宽度的变量被称为**位域**。位域可以存储多于 1 位的数，例如，需要一个变量来存储从 0 到 7 的值，可以定义一个宽度为 3 位的位域：
+
+```c
+struct
+{
+  unsigned int age : 3;
+} Age;
+```
+
+上面的结构定义指示 C 编译器，age 变量将只使用 3 位来存储这个值，如果试图使用超过 3 位，则无法完成。
+
+```c
+struct bs{
+    int a:8;
+    int b:2;
+    int c:6;
+}data;
+```
+
+data 为 bs 变量，共占两个字节。其中位域 a 占 8 位，位域 b 占 2 位，位域 c 占 6 位。
+
+```c
+struct packed_struct {
+  unsigned int f1:1;
+  unsigned int f2:1;
+  unsigned int f3:1;
+  unsigned int f4:1;
+  unsigned int type:4;
+  unsigned int my_int:9;
+} pack;
+```
+
+packed_struct 包含了 6 个成员：四个 1 位的标识符 f1..f4、一个 4 位的 type 和一个 9 位的 my_int。
+
+```c
+#include <stdio.h>
+#include <string.h>
+ 
+struct
+{
+    unsigned int age : 3;
+} Age;
+ 
+int main( )
+{
+    // age 变量用 3 位来存储这个值，如果超过 3 位，则无法完成
+    Age.age = 4;
+    printf( "Sizeof( Age ) : %d\n", sizeof(Age) );
+    printf( "Age.age : %d\n", Age.age );
+   
+    // 二进制表示为 111 有三位，达到最大值
+    Age.age = 7;
+    printf( "Age.age : %d\n", Age.age );
+ 
+    Age.age = 8; // 二进制表示为 1000 有四位, 超出, 直接丢掉, 存不进去
+
+    printf( "Age.age : %d\n", Age.age );
+ 
+    return 0;
+}
+```
+
+上面的代码被编译时，带有警告，执行上面的代码：
+
+```
+Sizeof( Age ) : 4
+Age.age : 4
+Age.age : 7
+Age.age : 0
+```
+
+<font color=red>**从以上分析可以看出，位域在本质上就是一种结构类型，不过其成员是按二进位分配的**。</font>
+
+位域的使用和结构成员的使用相同，其一般形式为：
+
+```c
+位域变量名.位域名
+位域变量名->位域名
+```
+
+位域允许用各种格式输出。
+
+```c
+int main(){
+    struct bs{
+        unsigned a:1;
+        unsigned b:3;
+        unsigned c:4;
+    } bit,*pbit;
+    
+    bit.a=1;   // 给位域赋值（应注意赋值不能超过该位域的允许范围）
+    bit.b=7;   // 给位域赋值（应注意赋值不能超过该位域的允许范围）
+    bit.c=15;  // 给位域赋值（应注意赋值不能超过该位域的允许范围）
+    // 以整型格式输出三个域的内容
+    printf("%d,%d,%d\n", bit.a, bit.b, bit.c);
+    // 把位域变量 bit 的地址送给指针变量 pbit
+    pbit=&bit;
+    // 用指针方式给位域 a 重新赋值，赋为 0
+    pbit -> a = 0;
+    /* 复合位运算符 "&=" 相当于：pbit->b=pbit->b&3，位域 b 中原有值为 7，与 3 作按位与运算的结果为 3（111&011=011，十进制值为 3） */
+    pbit -> b &= 3;
+    /* 复合位运算符 "|=" 相当于：pbit->c=pbit->c|1，其结果为 15 */
+    pbit->c|=1;
+    // 用指针方式输出了这三个域的值
+    printf("%d,%d,%d\n",pbit->a,pbit->b,pbit->c);
+}
+```
+
+上例程序中定义了位域结构 bs，三个位域为 a、b、c。说明了 bs 类型的变量 bit 和指向 bs 类型的指针变量 pbit。这表示位域也是可以使用指针的。
 
 ## 18.2 强制类型转换
+
+
 
 
 
@@ -2438,7 +3860,11 @@ rewind()函数用于将文件指针重新指向文件的开头，同时清除和
 
 
 
+
+
 ## 18.4 可变参数
+
+
 
 
 
@@ -2446,15 +3872,9 @@ rewind()函数用于将文件指针重新指向文件的开头，同时清除和
 
 
 
+
+
 ## 18.6 递归
-
-
-
-## 18.7 位域
-
-
-
-## 18.8 typedef
 
 
 
