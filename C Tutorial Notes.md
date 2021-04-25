@@ -2176,7 +2176,7 @@ balance[4] = 50.0;
 
 上述语句把数组中第五个元素的值赋为 50.0。所有的数组都是以 0 作为第一个元素的索引（基索引），数组的最后一个索引是数组的总大小减去 1。下图是一个长度为 **10** 的数组：
 
-![img](D:\Github\ROS-Learning\imgs\c-array-1.png)
+![img](./imgs/carray.png)
 
 ## 9.3 访问数组元素
 
@@ -2231,7 +2231,7 @@ type arrayName [ x ][ y ];
 int x[3][4];
 ```
 
-![C 中的二维数组](D:\Github\ROS-Learning\imgs\two_dimensional_arrays.jpg)
+![C 中的二维数组](./imgs/two_dimensional_arrays.jpg)
 
 数组中的每个元素使用形式为 a[ i , j ] 的元素名称来标识，其中 a 是数组名称，i 和 j 是唯一标识 a 中每个元素的下标。
 
