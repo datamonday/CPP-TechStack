@@ -172,6 +172,8 @@ cout << a << endl << b << endl;	 // 表示输出a和b的值，endl表示换行
 
 ## 2.4 顺序表的初始化
 
+![顺序表的定义](D:\Github\CPP-TechStack\03 Data Structure Notes\imgs\顺序表的定义.PNG)
+
 ```c
 # include <stdio.h>
 # include <stdlib.h>
@@ -456,7 +458,9 @@ L is Empty?true!
 
 ## 2.5 顺序表的查找、插入和删除
 
-### 顺序表的查找
+### 查找
+
+算法思想：
 
 - 在线性表L中查找与指定值e相同的数据元素的位置；
 
@@ -522,39 +526,194 @@ Item position = 1
 
 ---
 
-### 顺序表的插入
+### 插入
 
+线性表的插入运算是指在表的第 $i$ (1<= i <= n+1) 个位置，插入一个新结点 $e$，使长度为 $n$ 的线性表变为长度为 $n+1$ 的线性表。
 
+可以插入位置：
 
+- 最前面
+- 最后面
+- 中间任意位置
 
+算法思想：
 
-![image-20210511193919549](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210511193919549.png)
+- 判断插入位置 $i$ 是否合法；
+- 判断插入顺序表的存储空间是否已满，若已满返回ERROR。
 
+```c
+# include <stdio.h>
+# include <stdlib.h>
+# define InitSize 50   // 定义初始分配容量(以sizeof(ElemType)为单位)
 
+# define ERROR -1
+# define OK     1
 
-![image-20210511194526974](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210511194526974.png)
+typedef int Status;	   // 定义别名 
+typedef int ElemType;  // 定义别名 
 
-![image-20210511201151598](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210511201151598.png)
+typedef struct{
+	ElemType *elem;  // 存储空间基地址
+	int length;		 // 当前长度(个数)
+    int MaxSize;     //最大容量
+}SeqList; 
 
+Status ListInsert(SeqList &L, int i, ElemType e) {
+	int j;
+	// 插入不合法 
+	if (i < 1 || i > L.length + 1) 
+	{
+		return ERROR;
+	}
+	// 当前存储空间已满 
+	else if (L.length == L.MaxSize)
+	{
+		return ERROR;
+	}
+	else 
+	{
+		// 从最后一个元素一直到第 i 个位置上的元素依次向后移动 
+		for (j = L.length-1; j >= i-1; --j) 
+		{
+			L.elem[j + 1] = L.elem[j];
+		}
+		// 将新元素放入第 i 个位置  
+		L.elem[i - 1] = e;
+		// 表长增加1 
+		L.length ++;
+	} 
+	return OK;
+} 
 
+int main(){
+	SeqList L;
+	L.elem = (ElemType*)malloc(InitSize * sizeof(ElemType));
+	L.elem[0] = 10;
+	L.elem[1] = 20;
+	L.length = 2;
 
-![image-20210511205923353](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210511205923353.png)
+	int pos;
+	// 插入元素 30
+	ListInsert(L, 3, 30);
+	printf("Insert Item = %d\n", L.elem[2]);
+	
+	return 0;
+}
+```
 
+输出：
 
-
-![image-20210511210823661](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210511210823661.png)
-
-
-
-![image-20210511210807006](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210511210807006.png)
-
-
-
-
+```c
+Insert Item = 30
+```
 
 ---
 
-## 2.6 线性表的链式存储（单链表）介绍
+### 删除
+
+线性表的删除运算是指将表的第 $i$ (1<= 1 <=n) 个结点删除，使长度为 $n
+$ 的线性表变为长度为 $n+1$ 的线性表。
+
+算法思想：
+
+- 判断删除位置 $i$ 是否合法（1<= i <= n）；
+- 将欲删除的元素保留在 $e$ 中；
+- 将第 $i+1$ 至第 $n$ 位的元素依次向前移动一个位置；
+- 表长减 1，删除成功返回 OK。
+
+```c
+# include <stdio.h>
+# include <stdlib.h>
+# define InitSize 50   // 定义初始分配容量(以sizeof(ElemType)为单位)
+
+# define ERROR -1
+# define OK     1
+
+typedef int Status;	   // 定义别名 
+typedef int ElemType;  // 定义别名 
+
+typedef struct{
+	ElemType *elem;  // 存储空间基地址
+	int length;		 // 当前长度(个数)
+    int MaxSize;     //最大容量
+}SeqList; 
+
+
+Status ListDeleteSeq(SeqList &L, int i){
+    int j;
+    int e; 
+    if (i < 1 || i > L.length) 
+    {
+        return ERROR;
+    }
+    else 
+    {	
+    	// 保存被删除的元素 
+        e = L.elem[i - 1];
+        // 将从被删除元素位置之后的第一个元素开始逐一向前移动
+        for (j = i; j <= L.length - 1; j++)
+        {
+            L.elem[j - 1] = L.elem[j];
+        }
+        // 表长减1
+        L.length --;
+    }
+    return OK;
+}
+
+
+int main(){
+	SeqList L;
+	L.elem = (ElemType*)malloc(InitSize * sizeof(ElemType));
+	L.elem[0] = 10;
+	L.elem[1] = 20;
+	L.length = 2;
+	
+	int pos;
+	
+	// 删除第2个元素 
+	ListDeleteSeq(L, 2);
+	
+	printf("L.length after Delete = %d\n", L.length);
+	
+	return 0;
+}
+```
+
+输出：
+
+```c
+L.length after Delete = 1
+```
+
+---
+
+### 算法复杂度分析
+
+时间复杂度：查找、插入、删除算法的平均时间复杂度为 $O(n)$；
+
+空间复杂度：顺序表操作算法的空间复杂度为 $S(n) = O(1)$ ，即没有占用辅助空间。
+
+----
+
+### 顺序表的优缺点
+
+优点：
+
+- 存储密度大
+- 可以随机存取表中任一元素
+
+缺点：
+
+- 插入、删除某一元素时，需要移动大量元素；
+- 浪费存储空间；
+- 属于静态存储形式，数据元素的个数不能自由扩充。
+
+---
+
+## 2.6 线性表的链式存储（单链表）
+
+
 
 ![image-20210511214313427](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210511214313427.png)
 
