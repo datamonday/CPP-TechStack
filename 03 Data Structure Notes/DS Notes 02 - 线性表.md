@@ -17,7 +17,7 @@
 
 线性表分类
 
- ## 2.1 线性表的定义和基本操作
+ ## 2.1 线性表的定义
 
 线性表是具有相同数据类型的 n 个数据元素的有限序列，其中 n 为表长，当n=0时，线性表示一个空表。
 
@@ -170,9 +170,9 @@ cout << a << endl << b << endl;	 // 表示输出a和b的值，endl表示换行
 
 ---
 
-## 2.4 顺序表的初始化
+## 2.4 顺序表的表示和实现
 
-![顺序表的定义](D:\Github\CPP-TechStack\03 Data Structure Notes\imgs\顺序表的定义.PNG)
+![顺序表的定义](./imgs/顺序表的定义.PNG)
 
 ```c
 # include <stdio.h>
@@ -322,7 +322,9 @@ int GetItem(SeqList L, int i, ElemType &e){
 }
 ```
 
-### 完整代码
+---
+
+完整代码
 
 ```c
 # include <stdio.h>
@@ -458,7 +460,7 @@ L is Empty?true!
 
 ## 2.5 顺序表的查找、插入和删除
 
-### 查找
+### 顺序表的查找
 
 算法思想：
 
@@ -526,7 +528,7 @@ Item position = 1
 
 ---
 
-### 插入
+### 顺序表的插入
 
 线性表的插入运算是指在表的第 $i$ (1<= i <= n+1) 个位置，插入一个新结点 $e$，使长度为 $n$ 的线性表变为长度为 $n+1$ 的线性表。
 
@@ -609,7 +611,7 @@ Insert Item = 30
 
 ---
 
-### 删除
+### 顺序表的删除
 
 线性表的删除运算是指将表的第 $i$ (1<= 1 <=n) 个结点删除，使长度为 $n
 $ 的线性表变为长度为 $n+1$ 的线性表。
@@ -661,7 +663,6 @@ Status ListDeleteSeq(SeqList &L, int i){
     return OK;
 }
 
-
 int main(){
 	SeqList L;
 	L.elem = (ElemType*)malloc(InitSize * sizeof(ElemType));
@@ -711,57 +712,50 @@ L.length after Delete = 1
 
 ---
 
-## 2.6 线性表的链式存储（单链表）
+## 2.6 线性表的链式存储 (单链表)
 
+结点：数据元素的存储映像。由数据与和指针域两部分组成。
 
+链表：n个结点由指针链组成的一个链表。
 
-![image-20210511214313427](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210511214313427.png)
+头指针：指向链表中第一个结点的指针。
 
+首元结点：链表中存储第一个数据元素 $a_1$ 的结点。
 
+头结点：在链表的首元结点之前附设的一个结点。**头结点的数据域可以为空，也可以存放线性表的长度等附加信息，可以省去每次使用时计数的工作量，但此结点不计入链表长度值**。
 
-![image-20210511230050202](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210511230050202.png)
-
-
-
-![image-20210511230236636](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210511230236636.png)
-
-
-
-![image-20210511232557010](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210511232557010.png)
-
-
-
-## 2.7单链表的表示和实现
-
-
-
-![image-20210511232818691](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210511232818691.png)
-
-![image-20210511232917146](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210511232917146.png)
-
-![image-20210511233827687](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210511233827687.png)
-
-
-
-![image-20210511234644662](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210511234644662.png)
-
-![image-20210511234756477](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210511234756477.png)
-
-
-
-![image-20210511235045810](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210511235045810.png)
-
-
-
-![image-20210511235239525](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210511235239525.png)
-
-
+![链表的分类](./imgs/链表的分类.PNG)
 
 ---
 
-## 2.8 单链表的基本操作
+**如何表示空表？**
 
-![image-20210512143704306](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512143704306.png)
+- 无头结点时，头指针为空表示空表。
+- 有头结点时，头结点的指针域为空表示空表。
+
+![单链表的表示](./imgs/单链表的表示.PNG)
+
+---
+
+**在链表中设置头结点的好处？**
+
+- **便于首元结点的处理**：首元结点的地址保存在头结点的指针域中，所以在链表的第一个位置上的操作和其它位置一直，无需进行特殊处理。
+- **便于空表和空表的统一处理**：无论链表是否为空，头指针都是指向头结点的非空指针，因此空表和费空表的处理也就统一了。
+
+---
+
+链表（链式存储结构）的特点
+
+- 结点在存储器中的位置是任意的，即**逻辑上相邻的数据元素在物理上不一定相邻**。
+- 访问时只能通过头指针进入链表，并通过每个结点的指针域依次向后顺序扫描其余结点，所以**寻找第一个结点和最后一个结点所花费的时间不等**。
+
+- 顺序表示随机存取，链表是顺序存取。
+
+---
+
+## 2.7 单链表的表示和实现
+
+单链表是由表头唯一确定，因此单链表可以用头指针的名字来命名，若头指针名是L，则把链表称为表L。
 
 指针的类型由指针域指向的对象的类型决定，例如：
 
@@ -773,145 +767,403 @@ p = &a; // 取地址运算符&，取出a的地址赋给p
 
 ### 定义单链表
 
-![image-20210512144343177](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512144343177.png)
+定义结点指针p：`LNode p;` ，`LNode *p;` 
 
-![image-20210512144922193](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512144922193.png)
+`*LinkList` 为指向LNode结构体类型（有两个成员）的指针。
 
-也可以定义：`Lnode *p;` `*LinkList` 为指向Lnode结构体类型（有两个成员）的指针。
+```c
+#include<stdio.h>
+#include<stdlib.h>
 
-![image-20210512145440230](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512145440230.png)
+typedef int ElemType;  // 定义别名 
+
+// 单链表的存储结构 
+typedef struct LNode{
+	// 声明结点的类型和指向结点的指针类型 
+	ElemType data;			// 结点的数据域 
+    // *next 为同样的指向LNode类型的指针
+	struct LNode *next;		// 结点的指针域 
+}LNode, *LinkList; 	
+// LinkList为为指向LNode结构体类型（有两个成员）的指针; 
+// 其将指向结构体的指针打包定义了 
+
+/*
+访问结点的数据域和指针域
+
+定义链表 
+LinkList L;
+
+定义结点指针 p 
+LNode p;  
+
+p.data;
+p.next; 
+
+等价于 
+
+LNode *p; 
+p -> data;
+p -> next; 
+*/ 
+```
+
+例如，存储学生学号，姓名，成绩的单链表的结点类型定义：
+
+```c
+typedef struct student{
+    char num[8];	// 数据域
+    char name[8];	// 数据域
+    int score;		// 数据域
+    struct student *next;
+}student, *LinkList;
+```
+
+### 初始化单链表
+
+`&L` 为引用型变量。
+
+带头结点的单链表的初始化。算法步骤：
+
+- 生成新结点作为头结点，用头指针L指向头结点；
+- 将头结点的指针域置空。
+
+```c
+Status InitLinkList(LinkList &L){
+	// 从内存中找一块空间分配给LNode
+	// LinkList 为取出这块空间的地址，并赋值给L 
+	L = (LinkList)malloc(sizeof(LNode));
+    if (L == NULL){
+        printf("申请内存空间失败！\n");
+    }
+	L -> next = NULL;
+	return OK;
+}
+```
+
+### 空的单链表 (头结点指针域为空)
+
+判断链表是否为空：
+
+- **空表**：链表中无元素，称为空链表。但头指针和头结点仍然存在。
+
+算法思路：
+
+- 判断头结点指针域是否为空。
+
+```c
+// 判断单链表是否为空 
+Status LinkListEmpty(LinkList L){
+	// 如果表为空，则返回1；如果不为空，则返回0 
+	if (L -> next) {
+		return 0;
+	} 
+	else{
+		return 1;
+	}
+}
+```
+
+### 销毁单链表 (删除全部结点)
+
+单链表的销毁：**链表销毁后不存在**。
+
+算法思路：
+
+- 从头指针开始，依次释放所有结点。
 
 
-
- ![image-20210512145705514](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512145705514.png)
-
-![image-20210512145950365](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512145950365.png)
-
-
-
-### 空的单链表
-
-&L 为引用型变量
-
-![image-20210512150759666](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512150759666.png)
-
-
-
-![image-20210512151252653](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512151252653.png)
-
-### 销毁单链表（删除全部结点）
-
-p=L：即p指向L（将头结点的指针赋值给p），目的是把头结点一块删除
 
 ![image-20210512152156919](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512152156919.png)
 
-![image-20210512152332501](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512152332501.png)
+```c
+// 销毁单链表 
+Status DestroyLinkList(LinkList &L){
+	// 只想需要删除的结点 
+	LNode *p;  // 等价于 LinkList p;
+	
+    // 没到表尾
+	while(L != NULL){
+        // 即p指向L（将头结点的指针赋值给p），目的是把头结点一块删除。
+		p = L;
+		L = L -> next;
+		free(p);
+	}
+} 
+```
 
-### 清空单链表（只保留头结点）
+### 清空单链表 (只保留头结点)
 
-p=L->next：即p指向L的首元结点，因为是清空链表，是删除除头结点以外的所有节点，所以不需要操作头结点，这点与销毁链表不同，需要注意。
+清空链表：**链表仍存在，但链表中无元素**，称为**空链表**（**头指针和头结点仍然在**）。
 
-q指向需要清除节点p的下一个节点。
+算法思路：
+
+- 依次释放所有结点，并将头结点指针域设为空。
+
+`p = L->next`：即p指向L的首元结点，因为是清空链表，是删除除头结点以外的所有结点，所以不需要操作头结点，这点与销毁链表不同，需要注意。
+
+q指向需要清除结点p的下一个结点。
 
 ![image-20210512153619116](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512153619116.png)
 
-![image-20210512153826528](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512153826528.png)
+```c
+// 清空单链表 
+Status DestroyLinkList(LinkList &L){
+	// 只想需要删除的结点 
+	LNode *p;  // LinkList p;
+	LNode *q;  // LinkList q;
+	// p 指向第一个结点 
+	p = L -> next; 
+	// 没到表尾
+	while(p != NULL){
+		q = p -> next;
+		free(p);
+		p = q;
+	}
+	// 头结点指针域置空
+	L -> next = NULL;
+	return OK; 
+} 
+```
 
 ### 求单链表的表长
 
+算法思路：
+
+- 从首元结点开始，依次计数所有结点。
+
 ![image-20210512154739474](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512154739474.png)
 
-![image-20210512155048484](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512155048484.png)
-
-
-
----
-
-## 2.9 取单链表中第i个元素的内容
-
-
-
-
-
-`*next` 为同样的指向LNode类型的指针。
-
-![image-20210512155710292](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512155710292.png)
-
-
-
-![image-20210512160548838](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512160548838.png)
-
-![image-20210512160737214](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512160737214.png)
-
-![image-20210512160747313](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512160747313.png)
-
-
-
-status是类c语言的语法。
-
-e需要返回，所以使用引用型变量 `&e`。
-
-
-
-## 2.10 单链表的按值查找
-
-### 返回数据的地址
-
-![image-20210512164220522](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512164220522.png)
-
-![image-20210512164616626](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512164616626.png)
-
-![image-20210512164740079](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512164740079.png)
-
-加指针符号`*` 表示这个函数返回的类型是Lnode指针类型
-
-### 返回数据的索引
-
-![image-20210512164454622](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512164454622.png)
-
-
+```c
+// 不需要对链表操作，所以传值调用即可，不需要引用 &L
+// 返回单链表中元素的个数。
+Status LengthLinkList(LinkList L){
+	// 只想需要删除的结点 
+	LNode *p;  // LinkList p;
+	// p 指向第一个结点 
+	p = L -> next;
+	
+	int i = 0;
+	 
+	// 遍历单链表，统计结点数 
+	while(p != NULL){
+		i++; 
+		p = p -> next;
+	}
+	// 返回链表L中数据元素的个数
+	// i初值为0，此处不为i+1，是因为最后一次while循环时 i已经加1了 
+	return i; 
+}
+```
 
 ---
 
-## 2.11 单链表的插入（先连后再接前）
+## 2.8 取单链表中第i个元素的内容
+
+算法思路：
+
+- 从链表的头指针触发，顺着链域 next 逐个结点往下搜索，直至搜索到第i个结点为止。因此，链表不是随机存取结构。
+
+算法步骤：
+
+- 1）从第1个结点(`L -> next`) 顺链扫描，用指针p指向当前扫描到的结点，p初值为`p = L -> next;`
+- 2）j 作为计数器，累计当前扫描过的结点数，j初值为1；
+- 3）当 p 指向扫描到下一结点时，计数器 j ++；
+- 4）当 j==i时，p所指的结点就是要找的第i个结点。
+
+```c
+// 求单链表中第i个元素的内容, 并通过变量e返回 
+// e需要返回，所以使用引用型变量 &e
+Status GetElemLinkList(LinkList L, int i, ElemType &e){
+	LNode *p;
+	// p 指向第一个结点 
+	p = L -> next;
+	// 定义计数器变量
+	int j = 1; 
+	
+	// 向后扫描，直至p指向第i个元素或p为空 
+	while (p && j < i) {
+		p = p -> next;
+		++j; 
+	}
+
+	// 要查找的第 i 个元素不存在 
+	if(!p || j>i ){
+		return ERROR;
+	}
+	else {
+		e = p -> data;
+		return OK;
+	}
+}
+```
+
+## 2.9 单链表的查找、插入和删除
+
+### 单链表的查找 (按照值查找)
+
+根据指定数据获取该数据所在的位置（地址）。
+
+**返回数据的地址**
+
+算法步骤：
+
+- 从第一个结点起，依次和e相比较。
+- 如果找到一个其值与e相等的数据元素，则返回其在链表中的位置或地址。
+- 如果遍历完整个链表之后都未找到其值和e相等的元素，则返回0或NULL。
+
+```c
+// LNode * 表示这个函数返回的类型是LNode指针类型
+LNode *LocateElemLinkList(LinkList L, ElemType e) {
+	// 在链表L中查找值为 e 的元素
+	// 若找到，则返回L中值为e的元素的地址；否则返回NULL
+	
+	LNode *p;
+	// p指向第一个结点
+	p = L -> next;
+	
+	while(p && p->data != e) {
+		p = p -> next;
+	} 
+	// 如果找到了，则p为元素的地址；如果未找到，则p已经到表尾，其值为NULL 
+	return p;
+}
+```
+
+---
+
+**返回数据的位序**
+
+根据指定数据获取该数据的位置序号。
+
+```c
+// 单链表按照值查找
+Status LocateElemLinkList(LinkList L, ElemType e) {
+	LNode *p;
+	p = L -> next;
+	int j = 1;
+	
+	while(p && p -> data != e){
+		p = p -> next;
+		j++;
+	}
+	if (p != NULL){
+		return j;
+	}
+	else{
+		return 0;
+	}
+}
+```
+
+---
+
+### 单链表的插入 (先连后再接前)
 
 在第i个结点前插入值为e的新结点。
 
-![image-20210512170250784](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512170250784.png)
+算法步骤：
 
-
+- 1）首先找到 $a_{i-1}$ 的存储位置 $p$；
+- 2）生成一个数据与为 $e$ 的新结点 $s$；
+- 3）插入新结点：新结点的指针域指向结点 $a_i$ ；结点 $a_{i-1}$ 的指针域指向新结点。
 
 ![image-20210512170853720](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512170853720.png)
 
-![image-20210512172009550](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512172009550.png)
-
-
+```c
+Status InsertElemLinkList(LinkList &L, int i, ElemType e) {
+	LNode *p;
+	p = L;
+	int j = 0;
+	
+	// 寻找第 i-1 个结点，p指向该结点
+	while(!p || j < i-1){
+		p = p -> next;
+		++j;
+	}
+    
+    // i大于表长+1或小于1，插入位置非法 
+	if (!p || j >= i){
+		return ERROR;
+	}
+    
+	// 生成新结点s，将s的数据域置为e
+	LNode *s;
+	s -> data = e;
+	// 将结点s插入到L中，以下语句的顺序不能调换！ 
+	s -> next = p -> next;
+	p -> next = s; 
+	
+	return OK;
+}
+```
 
 ---
 
-## 2.12 单链表的删除（双指针 p 和 q）
+### 单链表的删除 (双指针 p 和 q)
 
-删除第i个结点。双指针 p 和 q
+删除第i个结点。
+
+算法步骤：
+
+- 1）首先找到 $a_{i-1}$ 的存储位置 $p$ ，保存要删除的 $a_i$ 的值；
+- 2）零 `p -> next` 指向 $a_{i+1}$；
+- 3）释放结点 $a_i$ 的空间。
 
 ![image-20210512173758361](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512173758361.png)
 
-![image-20210512172845251](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512172845251.png)
-
-![image-20210512173702708](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512173702708.png)
-
-
+```c
+Status DeleteElemLinkList(LinkList &L, int i, ElemType &e) {
+	LNode *p;
+	p = L;
+	int j = 0;
+	
+	// 寻找位置为 i-1 的结点，p指向该结点
+	while(p -> next && j < i-1){
+		p = p -> next;
+		++j; // j 最大为 i-2，即指针p指向元素的索引
+	} 
+	
+	// 删除位置不合理 
+    // !(p -> next) 表示 p 之后无元素，即无法删除
+    // j >= i 表明要删除的元素位置超过了表长，此时也无法删除
+	if (!(p -> next) || j >= i){
+		return ERROR;
+	}
+	
+	// 临时保存被删除结点的地址以备释放
+	LNode *q;
+	q = p -> next;
+	// 改变被删除结点前驱结点的指针域
+	p -> next = q -> next;
+	// 保存删除结点的数据域
+	e = q -> data;
+	// 释放删除结点的空间
+	free(q);
+	
+	return OK;
+}
+```
 
 ---
 
-## 2.13 单链表的算法复杂度分析
+### 算法复杂度分析
 
-![image-20210512180231120](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512180231120.png)
+单链表的查找、插入和删除算法时间效率分析：
 
+- 查找：因单链表只能顺序存取，即在查找时要从头指针查起，查找的时间复杂度为 $O(n)$。
+- 插入和删除：因线性表不需要移动元素，只需要修改指针，一般情况下，插入和删除操作的时间复杂度为 $O(1)$。**但是如果要在单链表中进行前插或删除操作，由于要从头查找前驱结点，所耗时间复杂度为 $O(n)$** 。
 
+## 2.10 单链表的建立
 
-## 2.14 单链表的建立
+### 头插法 (先连后再接前)
 
-### 头插法
+元素插入在链表头部，也叫前插法。
+
+算法步骤：
+
+- 从一个空表开始，重复读入数据；
+- 生成新结点，将读入数据存放到新结点的数据域中；
+- 从最后一个结点开始，依次将各结点插入到链表的前端。
 
 ![image-20210512180515058](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512180515058.png)
 
@@ -921,23 +1173,319 @@ e需要返回，所以使用引用型变量 `&e`。
 
 ![image-20210512182225330](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512182225330.png)
 
-![image-20210512182735290](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512182735290.png)
+```c
+# include <stdio.h>
+# include <stdlib.h>
+# define InitSize 50   // 定义初始分配容量(以sizeof(ElemType)为单位)
 
-时间复杂度为O(n)。
+# define ERROR -1
+# define OK     1
+
+typedef int Status;	   // 定义别名 
+typedef int ElemType;  // 定义别名 
+
+
+// 单链表的存储结构 
+typedef struct LNode{
+	// 声明结点的类型和指向结点的指针类型 
+	ElemType data;			// 结点的数据域 
+	struct LNode *next;		// 结点的指针域 
+}LNode, *LinkList; 	// LinkList为为指向LNode结构体类型（有两个成员）的指针; 
+
+// 初始化单链表 
+Status InitLinkList(LinkList &L){
+	// 从内存中找一块空间分配给LNode
+	// LinkList 为取出这块空间的地址，并赋值给L 
+	L = (LinkList)malloc(sizeof(LNode));
+	if (L == NULL){
+		printf("申请内存空间失败！\n");
+    }
+	L -> next = NULL;
+	return OK;
+}
+
+// 前插法建立单链表 
+// 时间复杂度为O(n)
+LinkList HeadCreateLinkList(int n)
+{
+    LinkList L;
+	InitLinkList(L);
+	
+    ElemType x;
+    for (int i=n; i > 0; --i)
+    {
+    	printf("Please input linklist element[%d]:\n", i);
+    	
+    	scanf("%d", &x);
+        LNode *p;
+        p = (LNode *)malloc(sizeof(LNode));
+        p -> data = x;
+        
+        p -> next = L -> next;
+        L -> next = p;
+    }
+    return L;
+}
+
+int main(){
+	LinkList L, start;
+	InitLinkList(L);
+	
+	int n;
+	printf("Please input number of linklist element:\n");
+	scanf("%d", &n);
+	
+    L = HeadCreateLinkList(n);
+    for (start = L->next; start != NULL; start = start->next){
+    	printf("%d \t", start->data);
+	}
+
+	return 0;
+}
+```
+
+输出：
+
+```c
+// 逆序输入链表中元素的值
+
+Please input number of linklist element:
+5
+Please input linklist element[5]:
+555
+Please input linklist element[4]:
+444
+Please input linklist element[3]:
+333
+Please input linklist element[2]:
+222
+Please input linklist element[1]:
+111
+111     222     333     444     555
+```
 
 ---
 
-### 尾插法
+### 尾插法 (借助尾指针r)
+
+元素插入到链表尾部，也叫尾插法。
+
+算法步骤：
+
+- 从一个空表L开始，将新结点逐个插入到链表的尾部，尾指针r指向链表的尾结点。
+- 初始时，r与L均指向头结点。每读入一个数据元素则申请一个新结点，将新结点插入到尾结点后，r指向新结点。
 
 ![image-20210512183725607](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512183725607.png)
 
+```c
+# include <stdio.h>
+# include <stdlib.h>
+# define InitSize 50  // 定义初始分配容量(以sizeof(ElemType)为单位)
+
+# define ERROR -1
+# define OK     1
+
+typedef int Status;	   // 定义别名 
+typedef int ElemType;  // 定义别名 
 
 
-![image-20210512184042553](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512184042553.png)
+// 单链表的存储结构 
+typedef struct LNode{
+	// 声明结点的类型和指向结点的指针类型 
+	ElemType data;			// 结点的数据域 
+	struct LNode *next;		// 结点的指针域 
+}LNode, *LinkList; 	// LinkList为为指向LNode结构体类型（有两个成员）的指针; 
+
+// 初始化单链表 
+Status InitLinkList(LinkList &L){
+	// 从内存中找一块空间分配给LNode
+	// LinkList 为取出这块空间的地址，并赋值给L 
+	L = (LinkList)malloc(sizeof(LNode));
+	if (L == NULL){
+		printf("申请内存空间失败！\n");
+    }
+	L -> next = NULL;
+	return OK;
+}
+
+// 尾插法建立单链表 
+// 时间复杂度为O(n)
+LinkList TailCreateLinkList(int n)
+{
+    LinkList L;
+	InitLinkList(L);
+	
+	// 尾指针r指向头结点 
+	LNode *r;
+	r = L; 
+	
+    ElemType x;
+    for (int i=0; i < n; ++i)
+    {
+    	printf("Please input linklist element[%d]:\n", i);
+    	
+    	scanf("%d", &x);
+        LNode *p;
+        p = (LNode *)malloc(sizeof(LNode));
+        p -> data = x;
+        
+        p -> next = NULL;
+        // 插入到表尾 
+        r -> next = p;
+        // r指向新的尾结点 
+        r = p; 
+    }
+    r -> next = NULL;
+    
+    return L;
+}
 
 
+int main(){
+	LinkList L, start;
+	InitLinkList(L);
+	
+	int n;
+	printf("Please input number of linklist element:\n");
+	scanf("%d", &n);
+	
+	// 尾插法建立单链表 
+    L = TailCreateLinkList(n);
+    for (start = L->next; start != NULL; start = start->next){
+    	printf("%d \t", start->data);
+	}
+
+	return 0;
+}
+```
 
 ---
+
+## 2.11 单链表的逆置
+
+> Ref: http://c.biancheng.net/view/8105.html
+
+未反转的链表：
+
+![未反转的链表](./imgs/未反转的链表.png)
+
+反转后的链表：
+
+![反转后的链表](./imgs/反转后的链表.png)
+
+常用的实现方案有 4 种：迭代反转法、递归反转法、就地逆置法和头插法。递归反转法更适用于反转不带头结点的链表；其它 3 种方法既能反转不带头结点的链表，也能反转带头结点的链表。
+
+---
+
+### 迭代反转 (三个指针)
+
+该算法的思想：**从链表的首元结点开始，遍历至链表的最后一个结点，逐个改变所遍历到的结点的指针域，令其指向前一个结点**。
+
+首先定义 3 个指针，并分别命名为 beg、mid、end。它们的初始指向如图所示：
+
+![迭代反转链表的初始状态](./imgs/迭代反转链表的初始状态.png)
+
+在上图的基础上，遍历链表的过程就等价为：3 个指针每次各向后移动一个结点，直至 mid 指向链表中最后一个结点（此时 end 为 NULL ）。注意，这 3 个指针每移动之前，都需要改变 mid 所指结点的指针域，令其指向和 beg 相同。
+
+- 改变 mid 所指结点的指针域指向，令其和 beg 相同（即改为 NULL），然后再将 3 个指针整体各向后移动一个结点。
+
+  ![迭代反转链表过程一](./imgs/迭代反转链表过程一.png)
+
+- 改变 mid 所指结点的指针域指向，令其和 beg 相同（指向结点 1)，再将 3 个指针整体各向后移动一个结点。
+
+  ![迭代反转链表过程二](./imgs/迭代反转链表过程二.png)
+
+- 改变 mid 所指结点的指针域指向，令其和 beg 相同（指向结点 2 ），再将 3 个指针整体各向后移动一个结点。
+
+  ![迭代反转链表过程三](./imgs/迭代反转链表过程三.png)
+
+- 虽然 mid 指向了原链表最后一个结点，但还需修改 mid 所指结点的指针域指向，令其和 beg 相同（指向结点 3）。
+
+  ![迭代反转链表过程四](./imgs/迭代反转链表过程四.png)
+
+> 注意，这里只需改变 mid 所指结点的指向即可，不用修改 3 个指针的指向。
+
+- 最后只需改变 head 头指针的指向，令其和 mid 同向，就实现了链表的反转。
+
+```c
+// 单链表的逆置——迭代反转 
+LinkList IterReverseLinkList(LinkList &L){
+	if (L == NULL || L -> next == NULL){
+		return L;
+	}
+	else{
+		LNode *beg = NULL;
+		LNode *mid = L;
+		LNode *end = L -> next;
+	
+		while(1){
+			// 修改 mid 指针的指向
+			mid -> next =beg;
+			// 判断end是否为空（到达最后一个结点），如果成立则退出循环
+			if (mid == NULL) {
+				break;
+			} 
+			// 整体向后移动 3 的指针
+			beg = mid;
+			mid = end;
+			end = end -> next; 
+		}
+		// 修改链表L头指针的指向
+		L = mid; 
+	} 
+}
+```
+
+---
+
+### 就地逆置 (两个指针)
+
+就地逆置法和头插法的实现思想类似，唯一的区别在于，头插法是通过建立一个新链表实现的，而就地逆置法则是直接对原链表做修改，从而实现将原链表反转。
+
+在原链表的基础上做修改，需要额外借助 2 个指针（假设分别为 beg 和 end）。
+
+- 初始状态下，令 beg 指向第一个结点，end 指向 beg->next：
+
+
+  ![就地反转链表的初始状态](D:\Github\CPP-TechStack\03 Data Structure Notes\imgs\就地反转链表的初始状态.png)
+
+- 将 end 所指结点 2 从链表上摘除，然后再添加至当前链表的头部：
+  ![反转结点2](D:\Github\CPP-TechStack\03 Data Structure Notes\imgs\反转结点2.png)
+
+- 将 end 指向 beg->next，然后将 end 所指结点 3 从链表摘除，再添加到当前链表的头部：
+
+  ![反转结点3](D:\Github\CPP-TechStack\03 Data Structure Notes\imgs\反转结点3.png)
+
+- 将 end 指向 beg->next，再将 end 所示结点 4 从链表摘除，并添加到当前链表的头部：
+
+  ![反转结点 4](D:\Github\CPP-TechStack\03 Data Structure Notes\imgs\反转结点4.png)
+
+```c
+// 单链表的逆置——就地逆置 
+LinkList LocalReverseLinkList(LinkList &L){
+	if (L == NULL || L -> next == NULL){
+		return L;
+	}
+	else{
+		LNode *beg = L;
+		LNode *end = L -> next;
+	
+		while(end != NULL){
+			// 将 end 从链表中摘除
+			beg -> next = end -> next;
+			// 将 end 移动至链表头
+			end -> next = L;
+			L = end; 
+			// 调整 end 的指向，令其指向 beg 后一个结点，为反转下一个结点做准备 
+			end = beg -> next; 
+		}
+	} 
+}
+```
+
+---
+
+## 2.12 循环链表
 
 
 
