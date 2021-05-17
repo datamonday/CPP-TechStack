@@ -714,6 +714,8 @@ L.length after Delete = 1
 
 ## 2.6 线性表的链式存储 (单链表)
 
+> update：2021-5-12
+
 结点：数据元素的存储映像。由数据与和指针域两部分组成。
 
 链表：n个结点由指针链组成的一个链表。
@@ -733,7 +735,7 @@ L.length after Delete = 1
 - 无头结点时，头指针为空表示空表。
 - 有头结点时，头结点的指针域为空表示空表。
 
-![单链表的表示](./imgs/单链表的表示.PNG)
+![单链表的表示](./imgs/单链表的空表表示.PNG)
 
 ---
 
@@ -869,11 +871,11 @@ Status LinkListEmpty(LinkList L){
 
 算法思路：
 
-- 从头指针开始，依次释放所有结点。
+- 从头指针开始，依次释放所有结点。循环结束条件：`L==NULL` 。
 
+![销毁单链表](./imgs/销毁单链表.PNG)
 
-
-![image-20210512152156919](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512152156919.png)
+算法描述：
 
 ```c
 // 销毁单链表 
@@ -903,7 +905,9 @@ Status DestroyLinkList(LinkList &L){
 
 q指向需要清除结点p的下一个结点。
 
-![image-20210512153619116](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512153619116.png)
+![清空单链表](./imgs/清空单链表.PNG)
+
+算法描述：
 
 ```c
 // 清空单链表 
@@ -931,7 +935,9 @@ Status DestroyLinkList(LinkList &L){
 
 - 从首元结点开始，依次计数所有结点。
 
-![image-20210512154739474](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512154739474.png)
+![求单链表的表长](./imgs/求单链表的表长.PNG)
+
+算法描述：
 
 ```c
 // 不需要对链表操作，所以传值调用即可，不需要引用 &L
@@ -958,6 +964,8 @@ Status LengthLinkList(LinkList L){
 ---
 
 ## 2.8 取单链表中第i个元素的内容
+
+> update: 2021-5-13
 
 算法思路：
 
@@ -1067,7 +1075,9 @@ Status LocateElemLinkList(LinkList L, ElemType e) {
 - 2）生成一个数据与为 $e$ 的新结点 $s$；
 - 3）插入新结点：新结点的指针域指向结点 $a_i$ ；结点 $a_{i-1}$ 的指针域指向新结点。
 
-![image-20210512170853720](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512170853720.png)
+![单链表的插入](./imgs/单链表的插入.PNG)
+
+算法描述：
 
 ```c
 Status InsertElemLinkList(LinkList &L, int i, ElemType e) {
@@ -1109,7 +1119,9 @@ Status InsertElemLinkList(LinkList &L, int i, ElemType e) {
 - 2）零 `p -> next` 指向 $a_{i+1}$；
 - 3）释放结点 $a_i$ 的空间。
 
-![image-20210512173758361](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512173758361.png)
+![单链表的删除](./imgs/单链表的删除.PNG)
+
+算法描述：
 
 ```c
 Status DeleteElemLinkList(LinkList &L, int i, ElemType &e) {
@@ -1155,6 +1167,8 @@ Status DeleteElemLinkList(LinkList &L, int i, ElemType &e) {
 
 ## 2.10 单链表的建立
 
+> update: 2021-5-14
+
 ### 头插法 (先连后再接前)
 
 元素插入在链表头部，也叫前插法。
@@ -1165,13 +1179,9 @@ Status DeleteElemLinkList(LinkList &L, int i, ElemType &e) {
 - 生成新结点，将读入数据存放到新结点的数据域中；
 - 从最后一个结点开始，依次将各结点插入到链表的前端。
 
-![image-20210512180515058](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512180515058.png)
+![头插法建立单链表](./imgs/头插法建立单链表.PNG)
 
-
-
-![image-20210512181930229](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512181930229.png)
-
-![image-20210512182225330](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512182225330.png)
+算法描述：
 
 ```c
 # include <stdio.h>
@@ -1275,7 +1285,9 @@ Please input linklist element[1]:
 - 从一个空表L开始，将新结点逐个插入到链表的尾部，尾指针r指向链表的尾结点。
 - 初始时，r与L均指向头结点。每读入一个数据元素则申请一个新结点，将新结点插入到尾结点后，r指向新结点。
 
-![image-20210512183725607](C:\Users\34123\AppData\Roaming\Typora\typora-user-images\image-20210512183725607.png)
+![尾插法建立单链表](./imgs/尾插法建立单链表.PNG)
+
+算法描述：
 
 ```c
 # include <stdio.h>
@@ -1447,18 +1459,18 @@ LinkList IterReverseLinkList(LinkList &L){
 - 初始状态下，令 beg 指向第一个结点，end 指向 beg->next：
 
 
-  ![就地反转链表的初始状态](D:\Github\CPP-TechStack\03 Data Structure Notes\imgs\就地反转链表的初始状态.png)
+  ![就地反转链表的初始状态](./imgs/就地反转链表的初始状态.png)
 
 - 将 end 所指结点 2 从链表上摘除，然后再添加至当前链表的头部：
-  ![反转结点2](D:\Github\CPP-TechStack\03 Data Structure Notes\imgs\反转结点2.png)
+  ![反转结点2](./imgs/反转结点2.png)
 
 - 将 end 指向 beg->next，然后将 end 所指结点 3 从链表摘除，再添加到当前链表的头部：
 
-  ![反转结点3](D:\Github\CPP-TechStack\03 Data Structure Notes\imgs\反转结点3.png)
+  ![反转结点3](./imgs/反转结点3.png)
 
 - 将 end 指向 beg->next，再将 end 所示结点 4 从链表摘除，并添加到当前链表的头部：
 
-  ![反转结点 4](D:\Github\CPP-TechStack\03 Data Structure Notes\imgs\反转结点4.png)
+  ![反转结点 4](./imgs/反转结点4.png)
 
 ```c
 // 单链表的逆置——就地逆置 
@@ -1485,9 +1497,561 @@ LinkList LocalReverseLinkList(LinkList &L){
 
 ---
 
-## 2.12 循环链表
+## 2.12 单向循环链表的表示
+
+> update: 2021-5-15
+
+循环链表是一种头尾相连接的链表。即表中最后一个结点的指针域指向头结点，整个链表形成一个环。
+
+优点：从表中任一结点出发均可以找到表中的其他结点。
+
+空的循环链表中，头结点的指针域存储头指针。
+
+**如何判断链表是否到表尾？**
+
+由于循环链表中没有NULL指针，故设计遍历操作时，其终止条件不再像非循环链表那样判断p或p->netx是否为空，而是判断**它们是否等于头指针**。
+
+![单向循环链表的表示](./imgs/单向循环链表的表示.PNG)
+
+头指针表示单循环链表：
+
+- 找 $a_1$ 结点的时间复杂度为：$O(1)$；
+- 找 $a_n$ 结点的时间复杂度为：$O(n)$；
+
+可见头指针的方式不方便，通常表的操作是在表的首尾位置上进行的，故可以使用**尾指针表示单向循环链表**：
+
+- 找 $a_1$ 结点的时间复杂度为：$O(1)$；
+- **找 $a_n$ 结点的时间复杂度为：$O(1)$；**
+
+---
+
+## 2.13 单向循环链表的合并 (尾指针)
+
+将表Tb接在表Ta之后。
+
+![单向循环链表的合并](./imgs/单向循环链表的合并.PNG)
+
+算法描述 ( 时间复杂度为 `O(1)` )：
+
+```c
+# include <stdio.h>
+# include <stdlib.h>
+
+# define ERROR -1
+# define OK     1
+
+typedef int Status;	   // 定义别名 
+typedef int ElemType;  // 定义别名 
+
+typedef struct LNode{
+    ElemType data;
+    struct LNode *next;
+}LNode, *LinkList;
+
+Status InitialLinkList(LinkList &L){
+	L = (LinkList)malloc(sizeof(LNode));
+	if (L == NULL){
+		printf("申请内存空间失败！\n");
+    }
+    // 单向循环链表的空表表示: 头结点的指针域指向头指针 
+	L -> next = L;
+	
+	return OK;
+}
 
 
+// 时间复杂度为 O(1)
+LinkList ConnectLinkList (LinkList Ta, LinkList Tb){
+    // 假设Ta Tb均为非空的单向循环链表
+    // (1) p保存表Ta的头结点
+    LNode *p;
+    p = Ta -> next;
+    // (2) Tb表头链接到Ta的表尾
+    Ta -> next = Tb -> next -> next;
+    // (3) 释放Tb表头结点
+    free(Tb -> next);
+    // (4) 修改指针
+    Tb -> next = p;
+}
+
+Status printLinkList(LNode *head){
+    LNode *p = head;
+    while(p -> next != head) {
+        p = p -> next;
+        printf("%d", p -> data);
+    }
+    printf("\n");
+    
+    return OK;
+}
+
+Status main(){
+	return OK;
+}
+```
+
+---
+
+## 2.14 双向链表的表示
+
+为什么需要双向链表？
+
+单链表只有指示后继结点的指针域，所以查找后继结点方便。查找某结点的后继结点的执行时间为 $O(1)$ 。但是，查找前驱结点难，只能从表头出发向后查找。即查找某结点的前驱结点的执行时间为 $O(n)$ 。
+
+[**双向链表**]：在单链表的每个结点里再增加一个指向其直接前驱的指针域prior，这样链表中就形成了有两个方向不同的链，故称为双向链表。这样就克服了单向链表的缺点。
+
+```c
+typedef struct DLNode{
+    ElemType data;
+    struct DLNode *prior, *next;
+}DLNode, *DLinkList;
+```
+
+[双向循环链表]：与单循环链表类似，双向链表也可以有循环表：
+
+- 让头结点的前驱指针指向链表的最后一个结点；
+- 让最后一个结点的后继指针指向头结点。
+
+![双向链表的表示](./imgs/双向链表的表示.PNG)
+
+**双向链表结构的对称性**
+
+某一个结点p，p的前驱结点的后继结点为自身，p的后继结点的前驱结点为自身：
+
+```c
+// 以下两条语句均等于p自身
+p -> prior -> next = p;
+p -> next -> prior = p;
+```
+
+在双向链表中有些操作（例如：ListLength、GetElem等），因为仅仅涉及一个方向的指针，故它们的算法与线性链表的相同。但在插入、删除时，则需要同时修改两个方向上的指针，两者的操作的时间复杂度均为 $O(n)$ 。
+
+---
+
+## 2.15 双向链表的插入
+
+查找插入位置操作的时间复杂度为：$O(n)$；单纯插入操作的时间复杂度为：$O(1)$。故该算法的时间复杂度为：$O(n)$。
+
+![双向循环链表的插入](./imgs/双向循环链表的插入.PNG)
+
+算法描述：
+
+```c
+// 在带头结点的双向循环链表L中的第i个位置之前插入元素e 
+int InsertDLinkList(DLinkList &L, int i, ElemType e){
+	// 查找插入位置p
+	if(!( p = GetElemP_DLinkList(L, i) )){
+		return ERROR;
+	} 
+	else{
+		// 为待插入结点分配内存空间 
+		DLNode *s;
+		s -> data = e;
+		// 1. 将待插入结点s的prior域 指向 前一个结点 
+		s -> prior = p -> prior;
+		// 2. 将前一个结点的next域 指向 待插入结点 
+		p -> prior -> next = s;
+		// 3. 将待插入结点的next域 指向 下一个结点 
+		s -> next = p;
+		// 4. 将下一个结点的prior域 指向 待插入结点 
+		p -> prior = s;
+	}
+} 
+```
+
+## 2.16 双向链表的删除
+
+查找删除位置操作的时间复杂度为：$O(n)$；单纯删除操作的时间复杂度为：$O(1)$。故该算法的时间复杂度为：$O(n)$。
+
+![双向循环链表的删除](./imgs/双向循环链表的删除.PNG)
+
+算法描述：
+
+```c
+// 删除带头结点的双向循环链表L的第i个元素，并用e返回 
+int DeleteElemDLinkList(DLinkList &L, int i, ElemType &e){
+	if(!( p = GetElemP_DLinkList(L, i) )) {
+		return ERROR;
+	}
+	else{
+		// 将待删除结点的数据域赋值给e 
+		e = p -> data;
+		// 1. 将前一个结点的next域指向待删除结点的下一个结点 
+		p -> prior -> next = p -> next;
+		// 2. 将待删除结点的下一个结点的prior域指向前一个结点
+		p -> next -> prior = p -> prior; 
+		// 3.释放被删除结点的空间
+		free(p); 
+	}
+	return OK; 
+} 
+```
+
+## 2.17 链表的时间效率比较
+
+|                                 | 查找表头结点(首元结点) | 查找表尾结点                     | 查找节点 *p 的前驱结点                     |
+| ------------------------------- | ---------------------- | -------------------------------- | ------------------------------------------ |
+| 带头结点的单链表L               | `L->next;` \| $O(1)$   | 从`L->next;`依次向后遍历\|$O(n)$ | 通过 `p->next;` 无法找到其前驱结点         |
+| 带头结点仅设头指针L的循环单链表 | `L->next;` \| $O(1)$   | 从`L->next;`依次向后遍历\|$O(n)$ | 通过 `p->next;` 可以找到其前驱结点\|$O(n)$ |
+| 带头结点仅设尾指针R的循环单链表 | `R->next;` \| $O(1)$   | `R` \| $O(1)$                    | 通过 `p->next;` 可以找到其前驱结点\|$O(n)$ |
+| 带头结点的双向循环链表L         | `L->next;` \| $O(1)$   | `L->prior;` \| $O(1)$            | `p->prior;` \|$O(1)$                       |
+
+## 2.18 顺序表和链表的比较
+
+链式存储结构的**优点**：
+
+- 结点空间可以动态申请和释放；
+- 数据元素的逻辑次序靠结点的指针来知识，**插入和删除时不需要移动数据元素**。
+
+链式存储结构的**缺点**：
+
+- 存储密度小，每个结点的**指针域需要额外占用存储空间**。当每个结点的数据域所占字节不多时，指针域所占存储孔家内的比重显得很大。
+- 链式存储结构是**非随机存取结构**，对任一结点的操作都要从头指针按照指针链查找到该结点，这**增加了算法的复杂度**。
+
+**存储密度**：结点数据本身所占的存储量和整个结点结构中所占的存储量之比，即：
+
+**`存储密度 = 结点数据本身所占用的空间 / 结点占用的空间总量`**。例如，一单链表的一个结点，其数据域占用8个字节，指针域占用4个字节，可得存储密度为8/12=67%。
+
+一般地，存储密度越大，存储空间的利用率就越高。显然，顺序表的存储密度=1，而链表的存储密度<1。
+
+![image-20210516105737191](./imgs/链表和顺序表的比较.png)
+
+---
+
+## 2.19 线性表的合并
+
+- 重复元素的处理；
+
+- 顺序问题；**非递减有序排列：存在相等的元素**。
+
+![image-20210516115109448](./imgs/线性表的合并.png)
+
+（通用）算法描述：
+
+依次取出Lb中的每个元素，执行以下操作：
+
+- 在La中查找该元素；
+- 如果找不到，则将其插入La的最后。
+
+```c
+// 时间复杂度为：O(ListLength(La) * ListLength(Lb))
+
+// 两表合并后，通过La返回
+void union(List &La, List Lb){
+    // 求两个链表的长度
+    LaLen = ListLength(La);
+    LbLen = ListLength(Lb);
+    // 遍历Lb中的元素，看是否存在于La表中
+    for(i=1; i <= LbLen; ++i){
+        // 找到该元素
+        GetElem(Lb, i, e);
+        // 如果存在La中，说明重复了，不插入；如果不存在La中，则插入之
+        if(!LocateElem(La, e)){
+            ListInsert(&La, ++LaLen, e);
+        }
+    }
+}
+```
+
+## 2.20 有序表的合并
+
+![image-20210517185118612](./imgs/有序表的合并.png)
+
+算法步骤：
+
+- 创建一个新表Lc；
+- 依次从La或Lb中摘取元素值较小的结点插入到Lc表的最后，直至其中一个表变为空为止；
+- 继续将La或Lb其中一个表的剩余节点插入在Lc表的最后。
+
+### 1) 顺序表实现
+
+注意指向表尾的指针：pa_last和pb_last。
+
+![image-20210517185635367](./imgs/顺序表实现合并.png)
+
+算法描述：
+
+```c
+typedef int ElemType;
+
+typedef struct{
+	ElemType *elem;  // 存储空间基地址
+	int length;		 // 当前长度(个数)
+    int MaxSize;     //最大容量
+}SeqList;
+
+L.elem = (ElemType *)malloc(InitSize * sizeof(ElemType)); 
+
+// *pa 表示取pa指针所指向地址的内容，即数值
+
+void MergeListSeq(SeqList LA, SeqList LB, SeqList &LC){
+    // 指针pa和pb的初值分别指向两个表的第一个元素
+    pa = LA.elem;
+    pb = LB.elem;
+    
+    // 新表长度为待合并两表的长度之和
+    LC.length = LA.length + LB.length;
+    // 为合并后的新表分配一个数组空间
+    LC.elem = new ElemType[LC.length];
+    // 指针pc指向新表的第一个元素
+    pc = LC.elem;
+    // 指针pa_last指向LB表的最后一个元素
+    pa_last = LA.elem + LA.length - 1
+    // 指针pb_last指向LA表的最后一个元素
+    pb_last = LB.elem + LB.length - 1
+    // 两个表都非空
+    while (pa <= pa_last && pb <= pb_last){
+        if(*pa <= *pb){
+            // 依次摘取量表中值较小的结点
+            *pc ++ = *pa ++;
+        }
+        else{
+            *pc ++ = *pb ++;
+        }
+    }
+    // LB表已经到达表尾，将LA中剩余元素插入LC
+    while(pa <= pa_last){
+        *pc ++ = *pa ++;
+    }
+    // LA表已经到达表尾，将LB中剩余元素插入LC
+    while(pb <= pb_last){
+        *pc ++ = *pb ++;
+    }
+}
+```
+
+算法时间复杂度：$O(ListLength(LA) + ListLength(LB))$
+
+算法空间复杂度：$O(ListLength(LA) + ListLength(LB))$
+
+关于语句 `*pc++ = *pa++`，相当于三条语句。
+
+- 首先，由于是后置`++`运算，所以这里先进行赋值运算 `*pc = *pa`；
+- 其次，再将两个指针向后移动一位，即 `(*pc)++`，`(*pa)++`。
+
+注意，之所以可以直接使用 `++` 是因为顺序表的特性：逻辑上相邻的元素在物理存储上也相邻，指针 `++` 可以直接指向下一个数据元素，但在链表中就不可以！
+
+关于时间复杂度的理解：当表a和表b已经是非递增有序排列，并且满足表a的最后一个元素，小于表b的第一个元素，此时需要操作的次数最多，为 O(a表长+b表长)。
+
+### 2) 链表实现
+
+![image-20210516165732681](./imgs/链表实现有序表的合并1.png)
+
+两链表中，指针所指的元素比较小的一个赋值给pc。
+
+![image-20210516170550729](./imgs/链表实现有序表的合并2.png)
+
+比较两指针指向的下一个结点。
+
+![image-20210516170716480](./imgs/链表实现有序表的合并3.png)
+
+将pc指向较小的结点。
+
+![image-20210516170818330](./imgs/链表实现有序表的合并4.png)
+
+继续向下移动。
+
+![image-20210516170824171](./imgs/链表实现有序表的合并5.png)
+
+插入剩余段：
+
+![image-20210516171152425](./imgs/链表实现有序表的合并6.png)
+
+合并结果：
+
+![image-20210516171420312](./imgs/链表实现有序表的合并7.png)
+
+算法描述：
+
+```c
+void MergeList(LinkList &La, LinkList &Lb, LinkList &Lc){
+    // 两个指针分别指向链表的首元结点
+    pa = La -> next;
+    pb = Lb -> next;
+    // 额外的指针Lc，指向La的头结点
+    pc = Lc = La;
+    // 如果两个表都不为空，则比较指针指向的两个结点
+    while(pa && pb){
+        // 如果表A的结点元素值 <= 表B的结点的元素值
+        if(pa -> data <= pb -> data){
+            pc -> next = pa;
+            pc = pa;
+            // 指针pa向后移动
+            pa = pa -> next;
+        }
+        else{
+            pc -> next = pb;
+            pc = pb;
+            // 指针pb向后移动
+            pb = pb -> next;
+        }
+        // 插入剩余段
+        pc -> next = pa ? pa : pb;
+        // 释放表B的头结点
+        free(Lb);
+    }
+}
+```
+
+- 算法的时间复杂度：$O(ListLength(La) + ListLength(Lb))$。
+
+- 空间复杂度： $O(1)$，即不需要额外空间。
+
+---
+
+## 2.21 实例1: 普通多项式运算
+
+一元多项式的运算：实现两个多项式加、减、乘运算。
+
+$P_n(x) = p_0 + p_1 x + p_2 x^2 + ... + p_n x^n$
+
+思路：将多项式中的系数看做一个线性表：$(p_0, p_1, p_2, ..., p_n)$，每一项的指数 $i$ 隐含在其系数 $p_i$ 的序号中。
+
+例如：$P(x) = 10 + 5x - 4x^2 + 3x^2 + 2x^4$
+
+| 指数(下标 i) | 0    | 1    | 2    | 3    | 4    |
+| ------------ | ---- | ---- | ---- | ---- | ---- |
+| 系数 p[i]    | 10   | 5    | -4   | 3    | 2    |
+
+两个多项式的相加运算：使用顺序表实现，将相同位置的元素对应相加即可。
+
+![image-20210517171541646](./imgs/两个多项式的相加运算(顺序表).png)
+
+## 2.22 实例2: 稀疏多项式运算
+
+对于稀疏多项式，如果使用顺序表存储，则会出现许多为零的项，造成存储空间的浪费，因此使用结构体数组 (顺序存储) 实现，只保存非零项即可。
+
+![image-20210517171736163](./imgs/稀疏多项式运算1.png)
+
+思路：对于多项式 $P_n(x) = p_1x^{e_1} + p_2 x^{e_2} + ... + p_m x^{e_m}$ ，使用线性表可以表示为：$P = ((p_1, e_1), (p_2, e_2), ..., (p_m, e_m))$。这样就可以将多项式的运算转换为线性表的运算。对于上例则有：
+
+![image-20210517172255506](./imgs/稀疏多项式运算2.png)
+
+算法实现思路：
+
+- 创建一个新数组 c；
+- 分别从头遍历比较 a 和 b 的每一项；
+  - 若指数相同，对应系数相加，若其和不为零，则在c中增加一个新项；若其和为零，则不添加新项；
+  - 若指数不相同，将指数较小的项复制到c中；
+- 一个多项式已经遍历完毕时，将另一个剩余项依次复制到c中即可。
+
+那么数组 c 多大合适呢？上述顺序存储结构的空间复杂度较高，存储空间分配不灵活，因此使用**链式存储**来实现。多项式中的每一项都作为链表中的一个结点。该链表中的每个结点都有两个数据域，一个是系数，一个是指数。
+
+![image-20210517173013659](./imgs/稀疏多项式运算3.png)
+
+链表定义：
+
+```c
+typedef struct PNode{
+    float coef;  // 系数
+    int expn;  // 指数
+    struct PNode *next;  // 指针域
+}PNode, *Polynomial;
+```
+
+多项式创建——算法步骤（尾插法实现）：
+
+- 创建一个带有头结点的空链表。
+- 根据多项式的项的个数n，循环n次执行以下操作：
+  - 生成一个新结点 *s；
+  - 输入多项式当前项的系数和指数赋给新结点 *s的数据域；
+  - 设置一**前驱指针pre**，用于**指向待找到的第一个大于输入项指数的结点的前驱**，pre初值指向头结点；
+  - 指针q初始化，指向首元结点；
+  - 循链向下逐个比较链表中当前结点与输入项指数，找到第一个大于输入项指数的结点 *q；
+  - 将输入项结点 *s插入到结点 *q之前。
+
+多项式创建——算法描述：
+
+注意：该算法可以适用于指数的阶数的输入顺序不做限制的情况。
+
+```c
+void CreatPolyn(Polynomial &P, int n){
+    P = new PNode; // C++ style
+    P -> next = NULL; // 建立一个带头结点的单链表
+    // 依次输入n个非零项
+    for(i=1; i <= n; ++i){
+        s = new PNode; // 生成新结点
+        
+        scanf("%f", &coef); // 输入系数
+        scanf("%d", &expn); // 输入指数
+        
+        pre = P; // pre 用于保存q的前驱，初值为头结点
+        q = P -> next; // q初始化，指向首元结点
+        // 找到第一个 > 输入项指数的项 *q
+        while (q && q -> expn < s -> expn){
+            pre = q;
+            q = q -> next;
+        }
+        // 将输入项 s 插入到 q 和其前驱结点pre之间
+        s -> next = q;
+        pre -> next = s;
+    }
+}
+```
+
+多项式相加——算法分析：
+
+- 两个链表建立完毕之后，首先比较两个链表中第一个结点，看哪一个的指数比较小，比较小的结点，作为新链表的元素（因为未创建新的链表，所以相当于在原链表中保持不变，例如下图中A的常数项7）；
+- 该链表继续向后移动指针，碰到与另一个链表中指数相同的结点，则将系数进行相加，并保存在一个链表中（下例中，x项的系数相加后，保存在了A表中）。
+
+![image-20210516175119340](./imgs/稀疏多项式运算4.png)
+
+![image-20210516175337803](./imgs/稀疏多项式运算5.png)
+
+- 如果两个链表不存在相同指数的结点，则保存指数较小的结点元素，并让该表的指针继续向下移动。若两结点的系数求和结果为零，则舍弃该项。
+
+![image-20210516175056848](./imgs/稀疏多项式运算6.png)
+
+相加结果：
+
+![image-20210516182546377](./imgs/稀疏多项式运算7.png)
+
+多项式相加——算法步骤：
+
+- 指针p1和p2初始化，分别指向pa和pb的首元结点。
+- p3指向和多项式的当前结点，初值为pa的头结点。
+- 当指针p1和p2均未到达相应表尾时，则循环比较p1和p2所指结点对应的指数值（p1 -> expn < p2 -> expn），有下列三种情况：
+  - p1 -> expn == p2 -> expn 时，则将两个结点中的系数相加；
+    - 若和不为零，则修改p1所指结点的系数值，同时删除p2所指结点。
+    - 若和为零，则删除p1和p2所指结点。
+  - p1 -> expn < p2 -> expn 时，则应摘取p1所指结点插入到 “和多项式” 链表中去；
+  - p1 -> expn > p2 -> expn 时，则应摘取p2所指结点插入到 “和多项式” 链表中去；
+- 将非空多项式的剩余段插入到p3所指结点之后；
+- 释放pb的头结点。
+
+## 2.23 实例3: 图书信息管理
+
+很少做插入删除操作，而经常需要通过序号查询某一本书：顺序表。
+
+经常需要做插入删除操作：链表。
+
+首先定义保存图书信息的结构体：
+
+```c
+typedef struct Book{
+    char id[20];  //ISBN
+    char name[50];  // 书名
+    int price;  // 定价
+}Book;
+```
+
+顺序表和链表的定义：
+
+```c
+typedef struct SeqList{
+    Book *elem;
+    int length;
+}SeqList;
+
+typedef struct LNode{
+    Book data;
+    struct LNode *next;
+}LNode, *LinkList;
+```
+
+---
+
+## 2.24 易错题
 
 
 
