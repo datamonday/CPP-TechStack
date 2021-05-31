@@ -1,0 +1,9 @@
+A/Btesting A/B测试
+accuracy 准确率
+activationfunction 激活函数
+backpropagation 反向传播算法
+baseline 基准
+batch 批次
+batchsize 批次大小
+bias 偏差
+binning 分箱

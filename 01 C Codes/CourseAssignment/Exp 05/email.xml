@@ -1,0 +1,12 @@
+<email>
+	<head>
+		<from>
+			<address>email1@xidian.edu.cn</address>
+		</from>
+		<to>
+			<address>email2@xidian.edu.cn</address>
+		</to>	
+		<subject> Where is your paper?</subject>
+	</head>
+	<body>where is the paper you promised me last week?</body>
+</email>
