@@ -254,7 +254,7 @@ void LevelOrder(BTNode *b){
 
 ![](D:./imgs/tree53.png)
 
-## 5.6 线索二叉树 
+### 5.5.13 线索二叉树 
 
 为什么要研究线索二叉树？
 
