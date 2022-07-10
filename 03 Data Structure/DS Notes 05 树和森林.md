@@ -168,3 +168,8 @@
 ![forest1](./imgs/ht26.png)
 
 ![forest1](./imgs/ht27.png)
+
+参考资料：
+
+1. 严蔚敏《数据结构(C语言描述)》
+2. 数据结构与算法基础：[bilibili](https://www.bilibili.com/video/BV1nJ411V7bd?p=5&spm_id_from=pageDriver)
